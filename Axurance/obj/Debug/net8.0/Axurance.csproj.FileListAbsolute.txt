@@ -1,0 +1,12 @@
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\bin\Debug\net8.0\Axurance.deps.json
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\bin\Debug\net8.0\Axurance.dll
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\bin\Debug\net8.0\Axurance.pdb
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.AssemblyInfoInputs.cache
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.AssemblyInfo.cs
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.csproj.CoreCompileInputs.cache
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.dll
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\refint\Axurance.dll
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.pdb
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\ref\Axurance.dll
+C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\Axurance\obj\Debug\net8.0\Axurance.csproj.AssemblyReference.cache

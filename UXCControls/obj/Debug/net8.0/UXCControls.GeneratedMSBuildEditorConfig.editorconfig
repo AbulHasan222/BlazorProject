@@ -1,0 +1,95 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = UXCControls
+build_property.RootNamespace = UXCControls
+build_property.ProjectDir = C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\UXCControls\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\abul.hasan\FintechHub\ConversionPracticeProject\UXCControls
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHBtn.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhCdG4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHCell.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhDZWxsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHDate.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhEYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHEmail.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhFbWFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhQYXNzd29yZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHTextArea.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhUZXh0QXJlYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/FHTextBox.razor]
+build_metadata.AdditionalFiles.TargetPath = RkhUZXh0Qm94LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_Amount.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX0Ftb3VudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_DataGrid.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX0RhdGFHcmlkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_Date.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX0RhdGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_DropDown.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX0Ryb3BEb3duLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_Email.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX0VtYWlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_Number.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX051bWJlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_Password.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX1Bhc3N3b3JkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_Switch.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX1N3aXRjaC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_TextArea.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX1RleHRBcmVhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/UXC_TextBox.razor]
+build_metadata.AdditionalFiles.TargetPath = VVhDX1RleHRCb3gucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/abul.hasan/FintechHub/ConversionPracticeProject/UXCControls/Component1.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50MS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-nhgu0qindk

@@ -1,0 +1,53 @@
+﻿<!-- ButtonComponent.razor -->
+@code {
+
+    [Parameter] public bool ShowButton1 { get; set; } = true;
+    [Parameter] public bool ShowButton2 { get; set; } = true;
+    [Parameter] public bool ShowButton3 { get; set; } = true;
+    [Parameter] public bool ShowButton4 { get; set; } = true;
+    [Parameter] public bool ShowButton5 { get; set; } = true;
+    // Define event handlers for each button
+   
+    [Parameter] public EventCallback OnFHBtn1Click { get; set; }
+    [Parameter] public EventCallback OnFHBtn2Click { get; set; }
+    [Parameter] public EventCallback OnFHBtn3Click { get; set; }
+    [Parameter] public EventCallback OnFHBtn4Click { get; set; }
+    [Parameter] public EventCallback OnFHBtn5Click { get; set; }
+
+    // private void FHBtn1Click() => Console.WriteLine("Button 1 clicked");
+    // private void FHBtn2Click() => Console.WriteLine("Button 2 clicked");
+    // private void FHBtn3Click() => Console.WriteLine("Button 3 clicked");
+    // private void FHBtn4Click() => Console.WriteLine("Button 4 clicked");
+    // private void FHBtn5Click() => Console.WriteLine("Button 5 clicked");
+
+    private async Task HandleBtn1Click() => await OnFHBtn1Click.InvokeAsync();
+    private async Task HandleBtn2Click() => await OnFHBtn2Click.InvokeAsync();
+    private async Task HandleBtn3Click() => await OnFHBtn3Click.InvokeAsync();
+    private async Task HandleBtn4Click() => await OnFHBtn4Click.InvokeAsync();
+    private async Task HandleBtn5Click() => await OnFHBtn5Click.InvokeAsync();
+}
+
+
+
+<div>
+    @if (ShowButton1)
+    {
+        <button class="btn btn-sm btn-info" @onclick="HandleBtn1Click">Button 1</button>
+    }
+    @if (ShowButton2)
+    {
+        <button class="btn btn-sm btn-primary" @onclick="HandleBtn2Click">Button 2</button>
+    }
+    @if (ShowButton3)
+    {
+        <button class="btn btn-sm btn-success" @onclick="HandleBtn3Click">Button 3</button>
+    }
+    @if (ShowButton4)
+    {
+        <button class="btn btn-sm btn-danger" @onclick="HandleBtn4Click">Button 4</button>
+    }
+    @if (ShowButton5)
+    {
+        <button class="btn btn-sm btn-warning" @onclick="HandleBtn5Click">Button 5</button>
+    }
+</div>

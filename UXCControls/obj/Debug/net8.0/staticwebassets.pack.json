@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXCControls\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\UXCControls.bundle.scp.css",
+      "PackagePath": "staticwebassets\\UXCControls.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXCControls\\wwwroot\\background.png",
+      "PackagePath": "staticwebassets\\background.png"
+    },
+    {
+      "Id": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXCControls\\wwwroot\\exampleJsInterop.js",
+      "PackagePath": "staticwebassets\\exampleJsInterop.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.UXCControls.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.UXCControls.props",
+      "PackagePath": "build\\UXCControls.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.UXCControls.props",
+      "PackagePath": "buildMultiTargeting\\UXCControls.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.UXCControls.props",
+      "PackagePath": "buildTransitive\\UXCControls.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

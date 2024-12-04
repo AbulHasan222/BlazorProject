@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "yCZ6y01RuaFf92OHor1EV/4PjhgWkzWczDkdmVw2EeQ=",
+  "Source": "UXComponents",
+  "BasePath": "_content/UXComponents",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "UXComponents\\wwwroot",
+      "Source": "UXComponents",
+      "ContentRoot": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXComponents\\wwwroot\\",
+      "BasePath": "_content/UXComponents",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXComponents\\wwwroot\\background.png",
+      "SourceId": "UXComponents",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXComponents\\wwwroot\\",
+      "BasePath": "_content/UXComponents",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXComponents\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "UXComponents",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\abul.hasan\\FintechHub\\ConversionPracticeProject\\UXComponents\\wwwroot\\",
+      "BasePath": "_content/UXComponents",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}
