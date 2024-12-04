@@ -1,0 +1,245 @@
+﻿@page "/VerificationNIDUI"
+@rendermode InteractiveServer
+
+<NavMenu OnFHBtnAddClick="submit" ShowButtonAdd="true" ShowButtonView="true" OnFHBtnRefreshClick="OnRefresh" ShowButtonDelete="false" ShowButtonRefresh="true" OnFHBtnExitClick="Exit" ShowButtonExit="true" />
+<div class="card" style="width:100%;height:550px;overflow:hidden;overflow-y:scroll;background:#f2f2f2;">
+    <div class="card" style="margin:20px;padding:10px;">
+        <EditForm Model="@user_Info" OnInvalidSubmit="submit">
+            <div class="text-center">
+                <h3>User Information</h3>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">User ID:</label>
+                <div class="col-sm-5"><input class="form-control" Placeholder="User ID" @bind-value="user_Info.USER_ID" @onblur="FetchData"></input></div>
+            </div>
+
+
+        </EditForm>
+        @if (list_Param_Limit_Info.Count > 0)
+        {
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label">User Name:</label>
+                <div class="col-sm-5">
+                    <UXC_TextBox CssClass="form-control"
+                                 Placeholder="Enter Limit Amount"
+                                 @bind-Value="objUserProfile.USER_NAME" />
+                </div>
+                <label class="col-sm-5 col-form-label">Home Branch:</label>
+                <div class="col-sm-5">
+                    <UXC_TextBox CssClass="form-control"
+                                 Placeholder="Enter Limit Amount"
+                                 @bind-Value="objUserProfile.HOME_BRANCH_ID" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label">User Description:</label>
+                <div class="col-sm-5">
+                    <UXC_TextBox CssClass="form-control"
+                                 Placeholder="Enter Limit Amount"
+                                 @bind-Value="objUserProfile.USER_DESCRIP" />
+                </div>
+                <label class="col-sm-5 col-form-label">User Status:</label>
+                <div class="col-sm-5">
+                    <UXC_TextBox CssClass="form-control"
+                                 Placeholder="Enter Limit Amount"
+                                 @bind-Value="ActiveStatusFlag" />
+                </div>
+            </div>
+            <div class="text-center">
+                <h3>Assign Authorization Limits to the User</h3>
+            </div>
+            @* @foreach (var limit in mergedData)
+        {
+        <div class="form-group row">
+        <label class="col-sm-5 col-form-label">@limit.LIMIT_DESCRIPTION</label>
+        <div class="col-sm-5">
+        <UXC_TextBox CssClass="form-control"
+        Placeholder="Enter Limit Amount"
+        @bind-Value="limit.LIMIT_AMOUNT" />
+        </div>
+        </div>
+        } *@
+            @if (cashLimits.Any())
+            {
+                <h3>Limits For Cash Transactions</h3>
+                @foreach (var limit in cashLimits)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">@limit.LIMIT_DESCRIPTION</label>
+                        <div class="col-sm-5">
+                            <UXC_TextBox CssClass="form-control"
+                                         Placeholder="Enter Limit Amount"
+                                         @bind-Value="limit.LIMIT_AMOUNT" />
+                        </div>
+                    </div>
+                }
+            }
+            @if (transferLimits.Any())
+            {
+                <h3>Limits For Transfer Transactions</h3>
+                @foreach (var limit in transferLimits)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">@limit.LIMIT_DESCRIPTION</label>
+                        <div class="col-sm-5">
+                            <UXC_TextBox CssClass="form-control"
+                                         Placeholder="Enter Limit Amount"
+                                         @bind-Value="limit.LIMIT_AMOUNT" />
+                        </div>
+                    </div>
+                }
+            }
+
+            @if (clearingLimits.Any())
+            {
+                <h3>Limits For Clearing Transactions</h3>
+                @foreach (var limit in clearingLimits)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">@limit.LIMIT_DESCRIPTION</label>
+                        <div class="col-sm-5">
+                            <UXC_TextBox CssClass="form-control"
+                                         Placeholder="Enter Limit Amount"
+                                         @bind-Value="limit.LIMIT_AMOUNT" />
+                        </div>
+                    </div>
+                }
+            }
+
+            @if (otherLimits.Any())
+            {
+                <h3>Limits For Other Transactions</h3>
+                @foreach (var limit in otherLimits)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">@limit.LIMIT_DESCRIPTION</label>
+                        <div class="col-sm-5">
+                            <UXC_TextBox CssClass="form-control"
+                                         Placeholder="Enter Limit Amount"
+                                         @bind-Value="limit.LIMIT_AMOUNT" />
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+    </div>
+</div>
+@code {
+
+    UserInfo user_Info = new UserInfo();
+    List<UserInfo> list_User_Info = new List<UserInfo>();
+    List<ParamLimitInfo> list_Param_Limit_Info = new List<ParamLimitInfo>();
+    public string message;
+    USER_PROFILE objUserProfile = new USER_PROFILE();
+    public string ActiveStatusFlag { get; set; }
+    public class LimitDisplayModel
+    {
+        public string LIMIT_TYPE_ID { get; set; }
+        public string LIMIT_DESCRIPTION { get; set; }
+        public string LIMIT_AMOUNT { get; set; }
+    }
+    public List<LimitDisplayModel> mergedData = new List<LimitDisplayModel>();
+    public List<LimitDisplayModel> cashLimits = new List<LimitDisplayModel>();
+    public List<LimitDisplayModel> transferLimits = new List<LimitDisplayModel>();
+    public List<LimitDisplayModel> clearingLimits = new List<LimitDisplayModel>();
+    public List<LimitDisplayModel> otherLimits = new List<LimitDisplayModel>();
+
+    private async void submit()
+    {
+        if (user_Info.USER_ID != null)
+        {
+            list_User_Info = cashLimits
+            .Concat(transferLimits)
+            .Concat(clearingLimits)
+            .Concat(otherLimits)
+            .Where(limit => !string.IsNullOrWhiteSpace(limit.LIMIT_AMOUNT))
+            .Select(limit => new UserInfo
+                {
+                    USER_ID = user_Info.USER_ID,
+                    LIMIT_TYPE_ID = limit.LIMIT_TYPE_ID,
+                    LIMIT_AMOUNT = limit.LIMIT_AMOUNT,
+                    APPROVE_STATUS_FLAG = "1",
+                    REMARKS = user_Info.USER_ID + limit.LIMIT_TYPE_ID + "Updated"
+                }).ToList();
+            list_User_Info = _userAccess.UserGrantLimitReg(list_User_Info);
+        }
+        else
+        {
+            _jsruntime.InvokeVoidAsync("alert", "Please insert user id");
+        }
+
+        if (user_Info.ERROR_MSG == null)
+        {
+            list_User_Info = new List<UserInfo>();
+            user_Info = new UserInfo();
+            list_Param_Limit_Info = new List<ParamLimitInfo>();
+            _jsruntime.InvokeVoidAsync("alert", "Data Saved Successfully");
+        }
+        else
+        {
+            message = user_Info.ERROR_MSG;
+            _jsruntime.InvokeVoidAsync("alert", message);
+            user_Info = new UserInfo();
+
+        }
+
+    }
+    private async void FetchData()
+    {
+        list_User_Info = new List<UserInfo>();
+        list_Param_Limit_Info = new List<ParamLimitInfo>();
+        if (user_Info.USER_ID != null && user_Info.USER_ID != "")
+        {
+
+            list_Param_Limit_Info = _userAccess.GetAllParamLimitInfo();
+            list_User_Info = _userAccess.GetUserGrantLimits(user_Info.USER_ID.ToLower());
+            objUserProfile = _userAccess.GetRegUserProfileById(user_Info.USER_ID.ToLower());
+            ActiveStatusFlag = objUserProfile.USER_STATUS_ACTIVE_FLAG == 1 ? "Active" : "Inactive";
+        }
+
+        mergedData = list_Param_Limit_Info
+            .GroupJoin(
+                list_User_Info,
+                param => param.LIMIT_TYPE_ID,
+                user => user.LIMIT_TYPE_ID,
+                (param, users) => new LimitDisplayModel
+                    {
+                        LIMIT_TYPE_ID = param.LIMIT_TYPE_ID,
+                        LIMIT_DESCRIPTION = param.LIMIT_DESCRIPTION,
+                        LIMIT_AMOUNT = users.FirstOrDefault()?.LIMIT_AMOUNT ?? ""
+                    })
+            .ToList();
+
+        cashLimits = mergedData
+         .Where(limit => limit.LIMIT_DESCRIPTION.StartsWith("CASH", StringComparison.OrdinalIgnoreCase)).ToList();
+
+        transferLimits = mergedData
+           .Where(limit => limit.LIMIT_DESCRIPTION.StartsWith("TRANSFER", StringComparison.OrdinalIgnoreCase)).ToList();
+
+        clearingLimits = mergedData
+           .Where(limit => limit.LIMIT_DESCRIPTION.StartsWith("CLEARING", StringComparison.OrdinalIgnoreCase)).ToList();
+
+        otherLimits = mergedData.Where(limit =>
+            !limit.LIMIT_DESCRIPTION.StartsWith("CASH", StringComparison.OrdinalIgnoreCase) &&
+            !limit.LIMIT_DESCRIPTION.StartsWith("TRANSFER", StringComparison.OrdinalIgnoreCase) &&
+            !limit.LIMIT_DESCRIPTION.StartsWith("CLEARING", StringComparison.OrdinalIgnoreCase)
+        ).ToList();
+
+    }
+
+    private void OnRefresh()
+    {
+        list_User_Info = new List<UserInfo>();
+        list_Param_Limit_Info = new List<ParamLimitInfo>();
+        user_Info = new UserInfo();
+        objUserProfile = new USER_PROFILE();
+        ActiveStatusFlag = string.Empty;
+        message = string.Empty;
+    }
+    private void Exit()
+    {
+        nav.NavigateTo("/home");
+    }
+}

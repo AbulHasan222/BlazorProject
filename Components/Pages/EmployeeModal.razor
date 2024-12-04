@@ -1,0 +1,100 @@
+﻿@using FintechHub.UI.Models
+
+
+<div class="container">
+    <h3>Employee List</h3>
+    <input type="text" id="searchEmp" class="form-control" @bind="SearchTxt" @oninput="OnSearchTextChanged" placeholder="Search Employee..." />
+
+    @* Other sorting inputs goes here *@
+
+    @if (FilteredDataList == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="table-container" style="max-height: 350px; overflow-y: auto;">
+            <table class="table table-striped" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in FilteredDataList)
+                    {
+                        <tr style="cursor:pointer; cursor:-webkit-pointer;" @ondblclick="() => HandleRowDoubleClick(item.First_Name)">
+                            <td>@item.First_Name</td>
+                            <td>@item.Last_Name</td>
+                            <td>@item.Father_Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public EventCallback<string> GetSelectedData { get; set; }
+    private Customer[]? DataList;
+    private IEnumerable<Customer>? FilteredDataList;
+    public string? SelectedId;
+    public string SearchTxt = string.Empty;
+
+    private List<Customer> Products = new List<Customer>
+    {
+       new Customer { First_Name = "Mohammad Masum", Last_Name = "Billah", Father_Name = "Abdul Mozid", Mother_Name="Rebeka Khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Mr.Shakil", Last_Name = "Uddin", Father_Name = "Abdul Kadir", Mother_Name="Rozina Akter",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Mir Faizul", Last_Name = "Haque", Father_Name = "Unknown", Mother_Name="Unknown",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="mir.faizul@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Mohammad Masum", Last_Name = "Billah", Father_Name = "Abdul Mozid", Mother_Name="Rebeka Khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Habil", Last_Name = "Billah", Father_Name = "Abdul Aziz", Mother_Name="Rebeka Khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Yousuf", Last_Name = "Sarder", Father_Name = "Abdul Hassan", Mother_Name="Sajeda khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" }
+        // Add more products as needed
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //DataList = await Http.GetFromJsonAsync<EmployeeModel[]>("sample-data/Employee.json");
+        FilteredDataList = Products;
+    }
+
+   
+
+    private void OnSearchTextChanged(ChangeEventArgs e)
+    {
+        SearchTxt = e.Value?.ToString() ?? string.Empty;
+        FilterEmpList();
+    }
+
+    private void FilterEmpList()
+    {
+        // if (DataList == null)
+        // {
+        //     FilteredDataList = Enumerable.Empty<Customer>();
+        //     return;
+        // }
+
+        FilteredDataList = Products
+            .Where(emp => string.IsNullOrEmpty(SearchTxt) ||
+                          emp.First_Name?.Contains(SearchTxt, StringComparison.OrdinalIgnoreCase) == true ||
+                          emp.Last_Name?.Contains(SearchTxt, StringComparison.OrdinalIgnoreCase) == true);
+    }
+
+    private void HandleRowDoubleClick(string id)
+    {
+        SelectedId = id;
+        GetSelectedData.InvokeAsync(SelectedId);
+    }
+
+    // Import and use model classes
+    public class EmployeeModel
+    {
+        public string? Id { get; set; }
+        public string? Name { get; set; }
+        public string? Designation { get; set; }
+    }
+}

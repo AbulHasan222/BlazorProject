@@ -1,0 +1,708 @@
+﻿@* -------------------------------------------------------------------- *@
+@* || Creation History || *@
+@* Author :Niaz Murshed Siam *@
+@* Creation Date : 05-09-2024 *@
+@* --------------------------------------------------------------------- *@
+
+@page "/SingleUserGrantProductsUI"
+@rendermode InteractiveServer
+@if (isSuccess)
+{
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" @onclick="close">
+            <span>&times;&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp @msg</span>
+        </button>
+    </div>
+}
+<NavMenu OnFHBtnAddClick="submit" ShowButtonAdd="true" OnFHBtnViewClick="submit"
+         ShowButtonView="true" ShowButtonDelete="false" ShowButtonRefresh="true" OnFHBtnExitClick="Exit" ShowButtonExit="true" />
+@* here css *@
+
+<style>
+    .header_user_info {
+        width: 247px;
+        height: 41px;
+        padding: 3px 3px 3px 3px;
+        background-color: #4479a2;
+        box-sizing: border-box;
+        box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+        font-family: "Calibri Bold", "Calibri", sans-serif;
+        font-weight: 700;
+        color: #f2f2f2;
+        text-align: center;
+        line-height: normal;
+        margin-left: 444px;
+    }
+
+    .user_infopanel {
+        margin-top: -14px;
+        width: 767px;
+        height: 80px;
+        margin-left: 233px;
+        padding: 24px 7px 4px 34px;
+        background-color: #d6e1eb;
+        box-sizing: border-box;
+        box-shadow: 5px 5px 5px 0px rgb(255, 255, 255);
+    }
+
+    .txt_userid {
+        margin-top: 4px;
+        width: 200px;
+        height: 25px;
+        padding: 2px 2px 2px 2px;
+        border: 2px solid #4479a2;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #000000;
+        text-align: left;
+    }
+
+    .txt_userid {
+        box-sizing: border-box;
+        color: #999999;
+    }
+
+        .txt_userid:disabled {
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+
+    .txt_userid_left {
+        margin-top: 26px;
+        width: 200px;
+        height: 25px;
+        padding: 2px 2px 2px 2px;
+        border: 2px solid #4479a2;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #000000;
+        text-align: left;
+    }
+
+    .txt_userid_left {
+        box-sizing: border-box;
+        color: #999999;
+    }
+
+        .txt_userid_left:disabled {
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+    .user-id {
+        margin-top: 8px;
+        width: 87px;
+        height: 18px;
+        background-color: rgba(255, 255, 255, 0);
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #333333;
+        text-align: left;
+        line-height: normal;
+    }
+
+    .child_user_info {
+        margin-bottom: 1px;
+        width: 147px;
+        height: 31px;
+        padding: 6px 3px 3px 3px;
+        background-color: #4479a2;
+        box-sizing: border-box;
+        box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+        font-family: "Calibri Bold", "Calibri", sans-serif;
+        font-weight: 700;
+        color: #f5f5f9;
+        text-align: center;
+        line-height: normal;
+    }
+
+    .child_user_infopanel {
+        height: 256px;
+        padding: 2px 2px 2px 2px;
+        background-color: #d6e1eb;
+        box-sizing: border-box;
+        box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+        width: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+        background: #f2f2f2;
+        overflow-x: scroll;
+    }
+
+    .id-name-service-type {
+        width: 417px;
+        height: 35px;
+        background-color: #96b9e3;
+        text-align: center;
+    }
+
+    .rep-unassigned {
+        width: 416px;
+        height: 35px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #d7d7d7;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+        color: #333333;
+        text-align: center;
+        line-height: normal;
+    }
+
+    .right_user_infopanel {
+        height: 256px;
+        padding: 2px 2px 2px 2px;
+        background-color: #d6e1eb;
+        box-sizing: border-box;
+        box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+        width: 100%;
+        overflow: hidden;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        background: #f2f2f2;
+    }
+
+    .right-remove-id-name-servi {
+        width: 432px;
+        height: 35px;
+        background-color: #ffffff;
+    }
+
+    .right_remove-id-name-servi {
+        width: 432px;
+        height: 35px;
+        background-color: #96b9e3;
+    }
+
+    .left-table-repeater {
+        height: 52px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #d7d7d7;
+        background-color: #96b9e3;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+        color: #333333;
+        text-align: center;
+        line-height: normal;
+    }
+
+    .right-table-repeater {
+        width: 432px;
+        height: 52px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #d7d7d7;
+        background-color: #96b9e3;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+        color: #333333;
+        text-align: center;
+        line-height: normal;
+    }
+
+    .please-select-left {
+        margin-top: 25px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        width: 160px;
+        height: 25px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #797979;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #000000;
+    }
+
+        .please-select-left:disabled {
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+    .please-select {
+        margin-top: 25px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 198px;
+        height: 25px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #797979;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #000000;
+    }
+
+        .please-select:disabled {
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+
+    .search {
+        margin-top: 24px;
+        width: 190px;
+        height: 25px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #797979;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #999999;
+        text-align: left;
+    }
+
+    .search {
+        box-sizing: border-box;
+        color: #999999;
+    }
+
+        .search:disabled {
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+
+    .search-left {
+        margin-top: 25px;
+        width: 165px;
+        height: 25px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #797979;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        font-family: "Calibri", sans-serif;
+        color: #999999;
+        text-align: left;
+    }
+
+    .search-left {
+        box-sizing: border-box;
+        color: #999999;
+    }
+
+        .search-left:disabled {
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+    .id {
+        width: 139px;
+        height: 35px;
+        padding: 2px 2px 2px 2px;
+        border: 1px solid #333333;
+        background-color: #87b9e7;
+        box-sizing: border-box;
+        font-family: "Times New Roman", sans-serif;
+        color: #333333;
+        text-align: center;
+        line-height: normal;
+    }
+</style>
+
+
+
+@* here css *@
+<div class="card" style="width:100%;height:550px;overflow:hidden;overflow-y:scroll;background:#f2f2f2;">
+    <div class="card" style="margin:20px;padding:10px;">
+        @* <h3 class="text-center child-header" style="background:#54769e;color:#f2f2f2;font-weight:600">User Information</h3> *@
+        <EditForm Model="@regUserGrantClient">
+            <div class="row">
+                <h3 class="header_user_info">User Information</h3>
+                <div class="user_infopanel">
+                    <div class="form-group row">
+                        <label for="USER ID" class="user-id">USER ID</label>
+                        <div class="col-sm-3">
+                            @*  <FHTextBox CssClass="form-control txt_userid" placeholder="Enter the user id" @bind-Value="regUserProfile.USER_ID fetchRegAssignedProducts">
+                            </FHTextBox> *@
+
+                            <input class="form-control txt_userid" placeholder="Enter the user id" @bind-value="regUserGrantClient.USER_ID" @ondblclick="fetchRegAssignedProducts" />
+                            <div id="groupNameAll" class="ax_default icon flex-item" style="cursor: pointer;" @ondblclick="fetchUserInfo">
+                                <img id="u110_img" class="img" src="https://files.axshare.com/gsc/8YIP1F/44/f9/04/44f904fee2b645648eec5d20c3df49a5/images/define_user_groups/u110.svg?pageId=20f37085-f2c6-484c-8022-1c796d34d6af" tabindex="0" style="outline: none;">
+                                <div id="u110_text" class="text" style="display:none; visibility: hidden;">
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </EditForm>
+
+        <div class="table-wrapper">
+            <table class="table table-striped">
+                <thead>
+
+                    <tr class="table-dark">
+                        <th>User ID</th>
+                        <th>Branch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var data in listUserProfile)
+                    {
+                        <tr>
+                            <td>@data.USER_ID</td>
+                            <td>@data.HOME_BRANCH_ID</td>
+                        </tr>
+                    }
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+
+        <div class="row">
+            <!-- Left Table -->
+            <div class="col-md-4" style="padding-top: 10%; width:490px; padding-left:-20%; border:10px">
+                <h6 class="child_user_info">Unassigned Product</h6>
+                <div class="child_user_infopanel">
+                    <div>
+                        <label for="ServiceType" style="margin-left: 10px;" class="user-id">Service Type</label>
+                        <select name="ServiceType" id="ServiceType" class="txt_userid_left">
+                            <option value="Id">Id</option>
+                            <option value="name">Name</option>
+                            <option value="service">Service</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select name="ServiceType" id="ServiceType" class="please-select-left">
+                                <option value="Id">Id</option>
+                                <option value="name">Name</option>
+                                <option value="service">Service</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            @* <FHTextBox CssClass="form-control search-left" Placeholder="search" @bind-Value="regUserGrantClient.USER_ID">
+                            </FHTextBox> *@
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table left-table-repeater">
+                            <thead class="id-name-service-type">
+
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Service Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in listRegUserGrantClientUnAssign)
+                                {
+                                    <tr class=" rep-unassigned">
+                                        <td>
+                                            <input type="checkbox" id="isUnAssign" checked="@checkboxStates.GetValueOrDefault(data, false)" @onchange="e => OnUAssignedCheckboxChange(data, e)" />
+                                        </td>
+                                        <td>@data.PRODUCT_ID</td>
+                                        <td>@data.PRODUCT_NAME</td>
+                                        <td>@data.OPS_TYPE_ID</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2" style="padding-top: 16%; padding-left: 6%;">
+                <button class="btn btn-primary" @onclick="() => AddIntoUnAssignListAtATime(listRegUserGrantClientAssign)">
+                    &raquo;&raquo;
+                </button>
+
+                <div style="height:10px">
+                </div>
+
+                <button class="btn btn-primary" style="padding-left:7%; width:58px" @onclick="() => AddIntoUnAssignList(TempRegUserList)">
+                    &raquo;
+                </button>
+
+                <div style="height:10px">
+                </div>
+
+                <button class="btn btn-danger" style="padding-left:7%; width:58px" @onclick="() => AddIntoAssignListAtATime(ListOfUsers)">
+                    &laquo;&laquo;
+                </button>
+
+                <div style="height:10px">
+                </div>
+
+                <button class="btn btn-danger" style="padding-left:7%; width:58px" @onclick="() => AddIntoAssignList(TempRegUserList)">
+                    &laquo;
+                </button>
+
+            </div>
+
+            <div class="col-md-4" style="width:490px;padding-top: 10%; border:10px">
+                <h6 class="child_user_info">Assigned Product</h6>
+                <div class="right_user_infopanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select name="ServiceType" id="ServiceType" class="please-select">
+                                <option value="Id">Id</option>
+                                <option value="name">Name</option>
+                                <option value="service">Service</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <UXC_TextBox CssClass="form-control search" Placeholder="search" @bind-Value="regUserGrantClient.OPS_TYPE_ID">
+                            </UXC_TextBox>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table right-table-repeater">
+                            <thead class="">
+                                <tr>
+                                    <th>Remove</th>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Service Type</th>
+                                    <th>FTN DR</th>
+                                    <th>FTN CR</th>
+                                    <th>NFT</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in listRegUserGrantClientAssign)
+                                {
+                                    <tr class="rep-unassigned">
+                                        <td>
+                                            <input type="checkbox" id="isAssign" checked="@checkboxStates.GetValueOrDefault(data, false)" @onchange="e => OnAssignedCheckboxChange(data, e)" />
+                                        </td>
+                                        <td>@data.PRODUCT_ID</td>
+                                        <td>@data.PRODUCT_NAME</td>
+                                        <td>@data.OPS_TYPE_ID</td>
+                                        <td>@data.ALLOW_FTN_DEBIT</td>
+                                        <td>@data.ALLOW_FTN_CREDIT</td>
+                                        <td>@data.ALLOW_NFT</td>
+                                        <td>@data.APPROVE_STATUS_FLAG</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    REG_USER_GRANT_CLIENT_PROD regUserGrantClient = new REG_USER_GRANT_CLIENT_PROD();
+    USER_PROFILE regUserProfile = new USER_PROFILE();
+    List<USER_PROFILE> listUserProfile = new List<USER_PROFILE>();
+    List<REG_USER_GRANT_CLIENT_PROD> ListOfUsers = new List<REG_USER_GRANT_CLIENT_PROD>();
+    List<REG_USER_GRANT_CLIENT_PROD> listRegUserGrantClientUnAssign = new List<REG_USER_GRANT_CLIENT_PROD>();
+    List<REG_USER_GRANT_CLIENT_PROD> listRegUserGrantClientAssign = new List<REG_USER_GRANT_CLIENT_PROD>();
+    private Dictionary<REG_USER_GRANT_CLIENT_PROD, bool> checkboxStates = new Dictionary<REG_USER_GRANT_CLIENT_PROD, bool>();
+    List<REG_USER_GRANT_CLIENT_PROD> TempRegUserList = new List<REG_USER_GRANT_CLIENT_PROD>();
+    bool IsChecked = false;
+    string msg = "Save successfully";
+    bool isSuccess = false;
+    private void isTrueFalse()
+    {
+        if (regUserGrantClient.ALLOW_FTN)
+        {
+            regUserGrantClient.ALLOW_FTN = Convert.ToBoolean(1);
+        }
+        else
+        {
+            regUserGrantClient.ALLOW_FTN = Convert.ToBoolean(0);
+        }
+
+        if (regUserGrantClient.ALLOW_FTN_DEBIT)
+        {
+            regUserGrantClient.ALLOW_FTN_DEBIT = Convert.ToBoolean(1);
+        }
+        else
+        {
+            regUserGrantClient.ALLOW_FTN_DEBIT = Convert.ToBoolean(0);
+        }
+        if (regUserGrantClient.ALLOW_FTN_CREDIT)
+        {
+            regUserGrantClient.ALLOW_FTN_CREDIT = Convert.ToBoolean(1);
+        }
+        else
+        {
+            regUserGrantClient.ALLOW_FTN_CREDIT = Convert.ToBoolean(0);
+        }
+        if (regUserGrantClient.ALLOW_NFT)
+        {
+            regUserGrantClient.ALLOW_NFT = Convert.ToBoolean(1);
+        }
+        else
+        {
+            regUserGrantClient.ALLOW_NFT = Convert.ToBoolean(0);
+        }
+    }
+
+
+    public void submit()
+    {
+        // if (regUserGrantClient.isAdd)
+        // {
+
+        //     REG_USER_GRANT_CLIENT_PROD resProd = _userAccess.createRegUserGrantClientProd(regUserGrantClient);
+        //     regUserGrantClient.APPROVE_STATUS_FLAG = 0;
+        //     if (!string.IsNullOrEmpty(resProd.ERROR_MSG))
+        //     {
+        //         _jsruntime.InvokeVoidAsync("alert", resProd.USER_ID + "  " + "is not inserted");
+        //     }
+        //     else
+        //     {
+        //         msg = "Save successfully";
+        //         isSuccess = true;
+        //         resProd = new REG_USER_GRANT_CLIENT_PROD();
+        //     }
+        // }
+    }
+
+
+    public void fetchUserInfo()
+    {
+        listUserProfile = _userAccess.GetRegUserProfile(regUserProfile.USER_ID);
+        Console.WriteLine("listUserProfile", listUserProfile);
+    }
+
+    public void fetchRegUnassignedProducts()
+    {
+        // listRegUserGrantClientUnAssign = _userAccess.GetRegUserGrantClientUnAssign(regUserGrantClient.USER_ID);
+        listRegUserGrantClientUnAssign = _userAccess.GetRegUserGrantClientUnAssign(regUserGrantClient.USER_ID).ToList();
+        // IsHideTable = false;
+        foreach (var user in listRegUserGrantClientUnAssign)
+        {
+            checkboxStates[user] = false;
+        }
+
+    }
+
+    public void fetchRegAssignedProducts()
+    {
+
+        // listRegUserGrantClientAssign = _userAccess.GetRegUserGrantClientAssign(regUserGrantClient.USER_ID);
+        listRegUserGrantClientAssign = _userAccess.GetRegUserGrantClientAssign(regUserGrantClient.USER_ID).ToList();
+        // IsHideTable = false;
+        foreach (var user in listRegUserGrantClientAssign)
+        {
+            checkboxStates[user] = false;
+        }
+        fetchRegUnassignedProducts();
+    }
+
+    // public void GetData()
+    // {
+    //     listRegUserGrantClient = _userAccess.GetRegUserGrantClientProd(regUserGrantClient.USER_ID);
+    // }
+    private void Exit()
+    {
+        nav.NavigateTo("/home");
+    }
+    private void close()
+    {
+        isSuccess = false;
+        regUserGrantClient = new REG_USER_GRANT_CLIENT_PROD();
+
+    }
+
+
+    private void OnUAssignedCheckboxChange(REG_USER_GRANT_CLIENT_PROD users, ChangeEventArgs e)
+    {
+        bool isChecked = (bool)e.Value;
+        checkboxStates[users] = isChecked;
+        IsCheckedUnAssign(users, isChecked);
+    }
+
+    private void IsCheckedUnAssign(REG_USER_GRANT_CLIENT_PROD users, bool isChecked)
+    {
+        if (isChecked)
+        {
+            if (!TempRegUserList.Contains(users))
+            {
+                TempRegUserList.Add(users);
+            }
+        }
+        else
+        {
+            TempRegUserList.Remove(users);
+        }
+    }
+
+    private void OnAssignedCheckboxChange(REG_USER_GRANT_CLIENT_PROD users, ChangeEventArgs e)
+    {
+        //isAssign = (bool)e.Value;
+
+        bool isChecked = (bool)e.Value;
+        checkboxStates[users] = isChecked;
+        IsCheckedAssign(users, isChecked);
+    }
+
+    private void IsCheckedAssign(REG_USER_GRANT_CLIENT_PROD users, bool isChecked)
+    {
+
+        if (isChecked)
+        {
+            if (!TempRegUserList.Contains(users))
+            {
+                TempRegUserList.Add(users);
+            }
+        }
+        else
+        {
+            TempRegUserList.Remove(users);
+        }
+
+
+    }
+
+    private void AddIntoUnAssignListAtATime(List<REG_USER_GRANT_CLIENT_PROD> objRegUserList)
+    {
+        foreach (var obj in listRegUserGrantClientAssign)
+        {
+            listRegUserGrantClientUnAssign.Add(obj);
+        }
+        objRegUserList.Clear();
+    }
+
+    private void AddIntoUnAssignList(List<REG_USER_GRANT_CLIENT_PROD> objTempList)
+    {
+        foreach (var item in objTempList)
+        {
+            listRegUserGrantClientAssign.Remove(item);
+            listRegUserGrantClientUnAssign.Add(item);
+            IsChecked = false;
+            // checkboxStates[users] = false;
+        }
+        objTempList.Clear();
+
+    }
+
+
+    private void AddIntoAssignListAtATime(List<REG_USER_GRANT_CLIENT_PROD> objRegUserList)
+    {
+        foreach (var obj in listRegUserGrantClientUnAssign)
+        {
+            listRegUserGrantClientAssign.Add(obj);
+        }
+        listRegUserGrantClientUnAssign.Clear();
+    }
+
+    private void AddIntoAssignList(List<REG_USER_GRANT_CLIENT_PROD> objTempList)
+    {
+        foreach (var item in objTempList)
+        {
+            listRegUserGrantClientAssign.Add(item);
+            IsChecked = false;
+            listRegUserGrantClientUnAssign.Remove(item);
+        }
+        objTempList.Clear();
+    }
+}

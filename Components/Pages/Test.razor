@@ -1,0 +1,462 @@
+﻿@page "/Test"
+@using FintechHub.UI.Models
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<PageTitle>Test</PageTitle>
+<script src="js/form.js"></script>
+
+<NavMenu PageName="Test" ShowButtonAdd="true" ShowButtonDelete="true" ShowButtonRefresh="true" OnFHBtnRefreshClick="CallFromGlobalAsync" />
+
+
+<div class="row">
+
+
+
+    <div class="col-12">
+
+        <div class="box box-primary">
+
+
+            <div class="box-body">
+                <div id="stepper1" class="bs-stepper wizard-numbered">
+                    <div class="bs-stepper-header" role="tablist">
+                        <div class="step" data-target="#account-details">
+                            <button type="button" class="step-trigger" role="tab" id="@Steps[0].headerButton" aria-controls="step-1" @onclick="() => MoveToStep(1)">
+                                <span class="bs-stepper-circle">1</span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Account Details</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i class="bx bx-chevron-right"></i>
+                        </div>
+                        <div class="step" data-target="#personal-info">
+                            <button type="button" class="step-trigger" role="tab" id="@Steps[1].headerButton" aria-controls="step-2" @onclick="() => MoveToStep(2)">
+                                <span class="bs-stepper-circle">2</span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Personal Info</span>
+                                    <span class="bs-stepper-subtitle">Add personal info</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i class="bx bx-chevron-right"></i>
+                        </div>
+                        <div class="step" data-target="#social-links">
+                            <button type="button" class="step-trigger" role="tab" id="@Steps[2].headerButton" aria-controls="step-3" @onclick="() => MoveToStep(3)">
+                                <span class="bs-stepper-circle">3</span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Social Links</span>
+                                    <span class="bs-stepper-subtitle">Add social links</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bs-stepper-content">
+                        <div id="account-details" class="content" role="tabpanel" aria-labelledby="@Steps[0].headerButton">
+                            <form id="@Steps[0].form" onsubmit="return false;" class="needs-validation" novalidate>
+                                <div class="content-header mb-4">
+                                    <h6 class="mb-0">Account Details</h6>
+                                </div>
+                                <div class="row g-3">
+                                    <div class=" col-md-6 form-group">
+
+                                        <UXC_TextBox Id="firstname" Label_Text="First Name" Tab_Index="3" Required="" Error_Message="First name Required."></UXC_TextBox>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_TextBox Id="lastname" Label_Text="last Name" Tab_Index="1" Error_Message="Last name Required."></UXC_TextBox>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <input type="text" id="fathername" @ondblclick="ShowModal" class="form-control form__input" autocomplete="off" placeholder=" ">
+                                        <label for="fathername" class=" form-label form__label">Doubl Click for modal</label>
+                                        <div class="invalid-feedback">
+                                            Fathers name required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_TextBox Id="motherName" Label_Text="Mother's Name" Tab_Index="2" Error_Message="Mother name Required."></UXC_TextBox>
+
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_Number Id="zipcode" Label_Text="Zip Code"></UXC_Number>
+
+                                    </div>
+                                    <div class="col-md-6 form-group">
+
+                                        <input type="text" id="state" class="form-control form__input" autocomplete="off" placeholder=" ">
+                                        <label for="state" class=" form-label form__label">State</label>
+
+                                    </div>
+                                    <div class="col-md-6 form-group">
+
+                                        <input type="text" id="division" class="form-control form__input" autocomplete="off" placeholder=" ">
+                                        <label for="division" class=" form-label form__label">Division</label>
+
+                                    </div>
+                                    <div class="col-md-6 form-group">
+
+                                        <input type="text" id="postcode" class="form-control form__input" autocomplete="off" placeholder=" ">
+                                        <label for="postcode" class=" form-label form__label">Post Code</label>
+
+                                    </div>
+
+
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_Date id="date1" Label_Text="Date of Birth" MaxDate="" MinDate="" Placeholder="dd/mm/yyyy"></UXC_Date>
+
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_Amount Id="txtAmount" Label_Text="Deposit Amount"></UXC_Amount>
+
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_AmountToWord Label_Text="Amount" MaxAmt="1000" MinAmt="1" DecimalPoint="3" Placeholder=" "></UXC_AmountToWord>
+
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <UXC_Date id="joinDate" Label_Text="Joining date" MaxDate="01/01/2025" MinDate="01/01/2022" Placeholder="__/__/____"></UXC_Date>
+                                    </div>
+
+
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_AmountToWord Label_Text="Amount" MaxAmt="1000" MinAmt="1" DecimalPoint="3" CssClass="form-control form__input" Placeholder=" "></UXC_AmountToWord>
+
+                                    </div>
+                                    <div class="col-md-6 form-group">
+
+                                        <UXC_DropDown id="selectCountry" Placeholder="Select country" Label_Text="Birth Country"></UXC_DropDown>
+
+                                    </div>
+
+                                    @*  <div class="col-md-6 form-group">
+
+                                    <UXC_Dynamic_Dropdown ></UXC_Dynamic_Dropdown>
+
+                                    </div> *@
+
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-label-secondary btn-prev" @onclick="() => PreviousStep(Steps[0].form, Steps[0].headerButton, 0)" disabled="">
+                                            <i class="bx bx-left-arrow-alt bx-sm ms-sm-n2 me-sm-2"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button class="btn btn-primary btn-next" @onclick="() => NextStep(Steps[0].form, Steps[0].headerButton, 1)">
+                                            <span class="align-middle d-sm-inline-block d-none me-sm-2">Next</span>
+                                            <i class="bx bx-right-arrow-alt bx-sm me-sm-n2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="personal-info" class="content" role="tabpanel" aria-labelledby="@Steps[1].headerButton">
+                            <form id="@Steps[1].form" onsubmit="return false;">
+                                <div class="content-header mb-4">
+                                    <h6 class="mb-0">Personal Info</h6>
+                                    <small>Enter Your Personal Info.</small>
+                                </div>
+                                <div class="row g-6">
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="first-name">First Name</label>
+                                        <input type="text" id="first-name" class="form-control" placeholder="John" required>
+
+                                    </div>
+                                    @* <div class="col-sm-6">
+
+                                    </div> *@
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-primary btn-prev" @onclick="() => PreviousStep(Steps[1].form, Steps[1].headerButton, 0)">
+                                            <i class="bx bx-left-arrow-alt bx-sm ms-sm-n2 me-sm-2"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button class="btn btn-primary btn-next" @onclick="() => NextStep(Steps[1].form, Steps[1].headerButton, 2)">
+                                            <span class="align-middle d-sm-inline-block d-none me-sm-2">Next</span>
+                                            <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="social-links" class="content" role="tabpanel" aria-labelledby="@Steps[2].headerButton">
+                            <form id="@Steps[2].form" onsubmit="return false;">
+                                <div class="content-header mb-4">
+                                    <h6 class="mb-0">Social Links</h6>
+                                    <small>Enter Your Social Links.</small>
+                                </div>
+                                <div class="row g-6">
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="twitter">Twitter</label>
+                                        <input type="text" id="twitter" class="form-control" placeholder="https://twitter.com/abc" required>
+                                    </div>
+                                    @* <div class="col-sm-6">
+
+                                    </div> *@
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-primary btn-prev" @onclick="() => PreviousStep(Steps[2].form, Steps[2].headerButton, 1)">
+                                            <i class="bx bx-left-arrow-alt bx-sm ms-sm-n2 me-sm-2"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button class="btn btn-success btn-submit" @onclick="() => OnSubmit()">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-12 mb-6">
+        <div class="box box-primary">
+
+            @*  <div class="box-header">
+            <h3 class="box-title">Hover Data Table</h3>
+            </div> *@
+
+            <div class="box-body">
+
+                <UXC_DataGrid TblClass="table table-bordered table-striped table-responsive" EnableSelection="true" ShowEditButton="true" OnFHEditClick="editClick" ShowDeleteButton="true" ShowViewButton="false" BtnColValue="Last_Name" DataSource="Products" CustomColumnNames="customColumnNames"></UXC_DataGrid>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#backDropModal">
+    Launch modal
+</button>
+<!-- Modal -->
+
+<div class="modal fade" id="backDropModal2" data-bs-backdrop="static" tabindex="-1">
+    <div style="z-index:-100" class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="backDropModalTitle">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="nameBackdrop" class="form-label">Name</label>
+                        <input type="text" id="nameBackdrop" class="form-control" placeholder="Enter Name">
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col mb-0">
+                        <label for="emailBackdrop" class="form-label">Email</label>
+                        <input type="email" id="emailBackdrop" class="form-control" placeholder="xxxx&#64;xxx.xx">
+                    </div>
+                    <div class="col mb-0">
+                        <label for="dobBackdrop" class="form-label">DOB</label>
+                        <input type="date" id="dobBackdrop" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="row">
+    <UXC_Modal IsVisible="@isModalVisible">
+        <BodyContent>
+            <EmployeeModal GetSelectedData="@((value) => SetEmpID(value))"></EmployeeModal>
+        </BodyContent>
+    </UXC_Modal>
+
+    <UXC_Modal__Premium Id="backDropModal">
+        <BodyContent>
+            <EmployeeModal GetSelectedData="@((value) => SetEmpID(value))"></EmployeeModal>
+        </BodyContent>
+    </UXC_Modal__Premium>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        // Function to format the date
+
+    });
+
+</script>
+
+
+
+
+@code {
+
+    private IJSObjectReference _bsStepper;
+
+    private bool isModalVisible = false;
+    private string? EmployeeID;
+
+    private string? selectedValue;
+
+    private void ShowModal()
+    {
+        isModalVisible = true;
+    }
+
+    public async Task CallFromGlobalAsync()
+    {
+        await JS.InvokeVoidAsync("radialMenu.fireToastEvent", "bg-warning", "Hello");
+        // await JSRuntime.InvokeVoidAsync("radialMenu.toggleMenu", MenuVisible);
+    }
+
+    private void SetEmpID(string Val)
+    {
+        EmployeeID = Val;
+        OnSelectedEmpCng(EmployeeID);
+        isModalVisible = false;
+    }
+
+    public void editClick(string value)
+    {
+        string a = value;
+
+        Console.WriteLine(a);
+    }
+
+    private void OnSelectedEmpCng(string val)
+    {
+        var itemval = val;
+    }
+
+    public class Step
+    {
+        public string form { get; set; }
+        public string headerButton { get; set; }
+    }
+    //Shakil/////////////
+
+    private void OnSelectedValueChanged(string value)
+    {
+        selectedValue = value;
+    }
+
+    private List<Customer> Products = new List<Customer>
+    {
+       new Customer { First_Name = "Mohammad Masum", Last_Name = "Billah", Father_Name = "Abdul Mozid", Mother_Name="Rebeka Khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Mr.Shakil", Last_Name = "Uddin", Father_Name = "Abdul Kadir", Mother_Name="Rozina Akter",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Mir Faizul", Last_Name = "Haque", Father_Name = "Unknown", Mother_Name="Unknown",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="mir.faizul@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Mohammad Masum", Last_Name = "Billah", Father_Name = "Abdul Mozid", Mother_Name="Rebeka Khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Habil", Last_Name = "Billah", Father_Name = "Abdul Aziz", Mother_Name="Rebeka Khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" },
+       new Customer { First_Name = "Yousuf", Last_Name = "Sarder", Father_Name = "Abdul Hassan", Mother_Name="Sajeda khatun",DateOfBirth="01/01/2024",Nationality="Bangladeshi", EMail="masum@gmail.com", Address="Satkhira, Debhata" }
+        // Add more products as needed
+    };
+
+    ///////////////////
+
+    private List<Step> Steps { get; set; } = new List<Step>
+    {
+        new Step { form = "accountDetailsForm", headerButton = "stepper1trigger1" },
+        new Step { form = "personalInfoForm", headerButton = "stepper1trigger2" },
+        new Step { form = "socialLinkForm", headerButton = "stepper1trigger3" },
+    };
+
+    protected int currentStep = 0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // await JS.InvokeVoidAsync("popoverEvent");
+            _bsStepper = await JS.InvokeAsync<IJSObjectReference>("bsStepper", "#stepper1");
+        }
+    }
+
+    private void Another()
+    {
+    }
+
+    private async Task NextStep(string formId, string headerBtn, int nextStep)
+    {
+        bool isValid = await JS.InvokeAsync<bool>("validateForm.checkValidation", formId, headerBtn);
+
+        if (isValid)
+        {
+            currentStep = nextStep;
+            await _bsStepper.InvokeVoidAsync("next");
+        }
+        // currentStep = nextStep;
+        // await _bsStepper.InvokeVoidAsync("next");
+
+
+    }
+
+    private async Task PreviousStep(string formId, string headerBtn, int prevStep)
+    {
+        bool isValid = await JS.InvokeAsync<bool>("validateForm.checkValidation", formId, headerBtn);
+        currentStep = prevStep;
+        await _bsStepper.InvokeVoidAsync("previous");
+    }
+
+    private async Task MoveToStep(int stepNumber)
+    {
+        bool isValid = await JS.InvokeAsync<bool>("validateForm.checkValidation", Steps[currentStep].form, Steps[currentStep].headerButton);
+        currentStep = stepNumber - 1;
+        await _bsStepper.InvokeVoidAsync("to", stepNumber);
+    }
+
+    private async Task OnSubmit()
+    {
+        for (int i = 0; i < Steps.Count; i++)
+        {
+            await JS.InvokeAsync<bool>("validateForm.checkValidation", Steps[i].form, Steps[i].headerButton);
+        }
+    }
+    private Dictionary<string, string> customColumnNames = new Dictionary<string, string>
+{
+    { "First_Name", "First Name" },
+    { "Last_Name", "Last Name" },
+    { "Father_Name", "Father Name" },
+    {"Mother_Name","Mother Name"},
+    {"DateOfBirth","Birth Date"},
+    {"Nationality","Nationality"},
+    {"EMail","E-mail"},
+    {"Address","Present Address"},
+};
+
+
+}
+
+

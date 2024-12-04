@@ -1,0 +1,180 @@
+﻿@page "/DBConnectCredentialUI"
+@using System.Text.Json
+@using Microsoft.AspNetCore.Components.Web
+@rendermode InteractiveServer
+
+<NavMenu  OnFHBtnAddClick="submit" ShowButtonAdd="true" OnFHBtnViewClick="GetData" ShowButtonView="true" ShowButtonDelete="false" ShowButtonRefresh="true" OnFHBtnRefreshClick="onRefresh" ShowButtonExit="true" />
+
+<div class="card" style="width:100%;height:850px;overflow:hidden;overflow-y:scroll;background:#f2f2f2;">
+    <div class="card" style="margin:20px;padding:10px;">
+        <h3>Param Application Connection Credentials</h3>
+
+        <EditForm Model="@paramApp">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="appID">Application Id:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <InputNumber Class="form-control" Placeholder="Application Id" @bind-Value="paramApp.APP_ID" @onblur="GetData"></InputNumber>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="database">Database:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <UXC_TextBox CssClass="form-control" Placeholder="Database Name" @bind-Value="paramApp.DATABASE"></UXC_TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="dbUserId">Database User Id:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <UXC_TextBox CssClass="form-control" Placeholder="Database User Id" @bind-Value="paramApp.DB_USER"></UXC_TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="dbPw">Database Password:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <InputText type="password" id="password" class="form-control" name="password" placeholder="Database Password" aria-describedby="password" @bind-Value="paramApp.DB_PASS"></InputText>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="dbType">Database Type:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <InputSelect @bind-Value="paramApp.DB_TYPE" class="form-select" id="databaseType">
+                                <option class="selectlist" value="">--- Select Database Type ---</option>
+                                <option class="selectlist" value="0">Oracle</option>
+                                <option class="selectlist" value="1">SQL</option>
+                            </InputSelect>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+
+        <br />
+
+        <!-- List should be on Modal -->
+        <div class="card">
+            <div class="card-body">
+                <div class="row" hidden="@IsHideTable">
+                    @if (ListOfParamApp.Count > 0)
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="table-dark">
+                                    <th>App Id</th>
+                                    <th>App Name</th>
+                                    <th>Database</th>
+                                    <th>DB User</th>
+                                    <th>DB Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ListOfParamApp)
+                                {
+                                    <tr>
+                                        <td>@item.APP_ID</td>
+                                        <td>@item.APP_NM</td>
+                                        <td>@item.DATABASE</td>
+                                        <td>@item.DB_USER</td>
+                                        <td>@item.DB_TYPE</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@code {
+
+    PARAM_APP_CONN_CRED paramApp = new PARAM_APP_CONN_CRED();
+    List<PARAM_APP_CONN_CRED> ListOfParamApp = new List<PARAM_APP_CONN_CRED>();
+    bool IsHideTable = true;
+
+
+    private void submit()
+    {
+        if (paramApp.isAdd)     //insert data
+        {
+            PARAM_APP_CONN_CRED resParamApp = _userAccess.ParamAppSave(paramApp);
+            if (!string.IsNullOrEmpty(resParamApp.ERROR_MSG))
+            {
+                _jsruntime.InvokeVoidAsync("alert", "Could not save Data!" + ' ' + resParamApp.ERROR_MSG);
+            }
+            else
+            {
+                _jsruntime.InvokeVoidAsync("alert", "Save successfully!");
+                paramApp = new PARAM_APP_CONN_CRED();
+            }
+        }
+        else if (paramApp.isOld)    //update data
+        {
+            PARAM_APP_CONN_CRED resParamApp = _userAccess.ParamAppSave(paramApp);
+
+            if (!string.IsNullOrEmpty(resParamApp.ERROR_MSG))
+            {
+                _jsruntime.InvokeVoidAsync("alert", "Could not save Data!" + ' ' + resParamApp.ERROR_MSG);
+            }
+            else
+            {
+                _jsruntime.InvokeVoidAsync("alert", "Updated successfully!");
+                paramApp = new PARAM_APP_CONN_CRED();
+            }
+        }
+    }
+
+    private void GetData()
+    {
+        if (paramApp.APP_ID > 0)
+
+        {
+            ListOfParamApp = _userAccess.GetParamAppGK(paramApp.APP_ID).ToList();
+            paramApp.isAdd = false;
+            paramApp.isOld = true;
+
+            foreach (var obj in ListOfParamApp)
+            {
+                paramApp.APP_ID = obj.APP_ID;
+                paramApp.DATABASE = obj.DATABASE;
+                paramApp.DB_USER = obj.DB_USER;
+                paramApp.DB_PASS = obj.DB_PASS;
+                paramApp.DB_TYPE = obj.DB_TYPE;
+            }
+            IsHideTable = true;
+        }
+        else
+        {
+            ListOfParamApp = _userAccess.GetParamAppGA(paramApp.APP_ID).ToList();
+            IsHideTable = false;
+        }
+
+    }
+
+    private void onRefresh()
+    {
+        paramApp = new PARAM_APP_CONN_CRED();
+        ListOfParamApp = new List<PARAM_APP_CONN_CRED>();
+
+    }
+}

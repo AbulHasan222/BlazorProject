@@ -1,0 +1,85 @@
+﻿@using System.Data.SqlClient
+@using System.Data
+@inject IDbConnectionFactory DbConnectionFactory
+
+
+<select @bind="SelectedValue" class="form-select">
+    <option value="">--Select--</option>
+    @foreach (var item in Items)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+</select>
+
+@code {
+    [Parameter]
+    public string DataSource { get; set; }
+
+    [Parameter]
+    public string SelectedValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string> SelectedValueChanged { get; set; }
+
+    private List<SelectListItem> Items { get; set; } = new List<SelectListItem>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrEmpty(DataSource))
+        {
+            Items.Clear();
+            return;
+        }
+
+        await LoadDataAsync(DataSource);
+    }
+
+    private async Task LoadDataAsync(string dataSource)
+    {
+        Items.Clear();
+        try
+        {
+            using (var connection = DbConnectionFactory.CreateConnection() as SqlConnection)
+            {
+                if (connection == null)
+                {
+                    throw new InvalidOperationException("Failed to create a SqlConnection.");
+                }
+
+                await connection.OpenAsync();
+                using (var command = new SqlCommand(dataSource, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            Items.Add(new SelectListItem
+                                {
+                                    Value = reader["ID"].ToString(),
+                                    Text = reader["FullName"].ToString()
+                                });
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle exception (e.g., log it)
+            Console.WriteLine($"Error loading data: {ex.Message}");
+        }
+    }
+
+    private Task OnSelectedValueChanged(ChangeEventArgs e)
+    {
+        SelectedValue = e.Value?.ToString();
+        return SelectedValueChanged.InvokeAsync(SelectedValue);
+    }
+
+    public class SelectListItem
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+    }
+}

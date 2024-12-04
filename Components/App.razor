@@ -1,0 +1,585 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CBS | Core Banking Solution</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+     
+    <script src="js/jquery.min.js"></script>
+    <script src="js/Navigation.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <link rel="stylesheet" href="css/jquery-ui.css">
+
+    <link rel="stylesheet" href="vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="vendor/fonts/flag-icons.css" />
+
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/core.css" rel="stylesheet" />
+    <link href="css/theme-default.css" rel="stylesheet" />
+    <link href="vendor/libs/bs-stepper/bs-stepper.css" rel="stylesheet" />
+    <!--New Added CSS For Custom Componenets-->
+    <link href="vendor/libs/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="vendor/libs/toastr/toastr.css" rel="stylesheet" />
+
+    <link href="vendor/libs/select2/select2.css" rel="stylesheet" />
+    <link href="css/daterangepicker.css" rel="stylesheet" />
+
+    <link href="css/app.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+
+    <!------------------END------------------->
+    <script src="js/stepper.js"></script>
+    <!-- bs-stepper CSS -->
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css"> *@
+
+    <!-- bs-stepper JS -->
+    @* <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>*@
+    
+
+
+
+    <style>
+
+
+        .sidebar input {
+            padding: 0 0 0 10px;
+            /* width: 100%; */
+            font-size: 16px;
+            color: #fff;
+            font-weight: bold;
+            outline: none;
+            height: 40px;
+            width: 100%;
+            border: none;
+            /* border-radius: 5px; */
+            transition: all 0.5s ease;
+            background: #374850;
+            display: block;           
+
+        }
+
+            .sidebar input::placeholder {
+                font: 12px sans-serif;
+                text-align:left;
+            }
+
+            
+
+        .qrSearch {
+            position: absolute;
+            top: 11px;
+            left: 87px;
+            /*font-size: 20px;*/
+            color: #999;
+        }
+
+        .spnSearch {
+            position: relative;
+            font-size: 22px;
+            min-width: 50px;
+            line-height: 40px;
+            display: inline-block;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .sidebar.close .spnSearch:hover {
+            color: var(--white-color);
+            background: var(--blue-color);
+        }
+
+        .spnSearch:hover {
+            color: var(--white-color);
+            /*background: var(--blue-color);*/
+        }
+
+        .content-header > .breadcrumb {
+            float: right;
+            padding: 7px 5px;
+            --bs-breadcrumb-padding-x: 0;
+            --bs-breadcrumb-padding-y: 0;
+            --bs-breadcrumb-margin-bottom: 1rem;
+            --bs-breadcrumb-bg: transparent;
+            --bs-breadcrumb-border-radius:;
+            --bs-breadcrumb-divider-color: #646e78;
+            --bs-breadcrumb-item-padding-x: 0.5rem;
+            --bs-breadcrumb-item-active-color: #384551;
+            display: flex;
+        }
+
+            .content-header > .breadcrumb > li > a {
+                font-weight: bold;
+                color: #000000c4
+            }
+
+        /* .content-header > .breadcrumb > li + li:before {
+                        content: '>\00a0';
+                    }
+
+                .breadcrumb > li + li:before {
+                    padding: 0 5px;
+                    color: #ccc;
+                    content: "/\00a0";
+                }*/
+
+        .home-section {
+            position: fixed;
+            /*background-color: var(--bs-body-bg);*/
+            /* min-height: 100vh; */
+            top: 70px;
+            left: 110px;
+            width: calc(100% - 110px);
+            transition: all 0.5s ease;
+            z-index: 2;
+            height: calc(100% - 70px);
+            overflow-y: auto;
+            border-radius: var(--bs-card-border-radius);
+        }
+
+        .layout-navbar {
+            position: fixed;
+            border-top: 2px solid #8592a321;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            height: 3.875rem;
+            flex-wrap: nowrap;
+            color: #646e78;
+            z-index: 2
+        }
+
+        .form-label, .col-form-label {
+            font-weight: bold;
+        }
+
+        .sidebar li:hover .tooltip {
+            opacity: 1;
+            /* transition: all 0.4s ease;
+            top: 50%;
+            position: fixed; */
+            left: 80px;
+        }
+
+        .sidebar li .tooltip {
+            position: absolute;
+            top: 0px;
+            left: calc(100% + 15px);
+            z-index: 3;
+            background: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            opacity: 0;
+            white-space: nowrap;
+            pointer-events: none;
+            transition: 0s;
+            color: black;
+        }
+    </style>
+
+
+    <style>
+
+        .menu-user {
+            display:flex;
+            justify-content: center;
+        }
+
+        .dropdown-menu {
+            margin-top: 1px !important;
+            box-shadow: 0 .25rem .75rem 0 rgba(34, 48, 62, .14);
+        }
+
+        .dropdown-menu-end {
+            --bs-position: end;
+        }
+
+        .dropdown-menu {
+            position: fixed;
+            top: 28%;
+            left: 80px;
+            display: none;
+            min-width: 300px;
+            margin: 0;
+            text-align: left;
+            list-style: none;
+            background-clip: padding-box;
+        }
+
+
+        .applicationList {
+            top: 17%;
+            left: 120px;
+        }
+
+        .profileDetails {
+            top: 30%;
+            left: 120px;
+        }
+
+        .search-container {
+            position: fixed;
+            top: 17%;
+            left: 120px;
+            display: none;
+            min-width: 500px;
+            min-height: 500px;
+            margin: 0;
+            text-align: left;
+            list-style: none;
+            background-clip: padding-box;
+            background-color: white;
+            border: 0 solid #e4e6e8;
+            border-radius: 0.375rem;
+        }
+
+            .search-container .bx-search {
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                transform: translateY(-50%);
+                font-size: 22px;
+                color: #FFF;
+            }
+
+            .search-container ul {
+                list-style: none;
+                padding: 0px;
+            }
+
+            .search-container li {
+                position: relative;
+                margin: 20px 20px;
+            }
+
+            .search-container input {
+                padding: 0 20px 0 50px;
+                background-color: #1d1b31;
+                border-radius: 5px;
+                height: 50px;
+            }
+
+        .layout-navbar .navbar-dropdown.dropdown-user .dropdown-menu {
+            min-width: 14rem;
+        }
+
+        .avatar {
+            position: relative;
+            width: 3.375rem;
+            height: 3.375rem;
+            cursor: pointer;
+        }
+
+        nav-link {
+            display: block;
+            padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+            font-size: var(--bs-nav-link-font-size);
+            font-weight: var(--bs-nav-link-font-weight);
+            color: var(--bs-nav-link-color);
+            background: none;
+            border: 0;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+        }
+
+        .dropdown-toggle {
+            white-space: nowrap;
+        }
+
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        .h-auto {
+            height: auto !important;
+        }
+
+        .w-px-40 {
+            width: 40px !important;
+        }
+
+        img, svg {
+            vertical-align: middle;
+        }
+
+        .layout-navbar .navbar-dropdown .dropdown-menu .dropdown-item {
+            min-height: 2.375rem;
+        }
+
+        li:not(:first-child) .dropdown-item, .dropdown-menu .dropdown-item:not(:first-child) {
+            margin-top: 2px;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+            clear: both;
+            font-weight: 400;
+            color: var(--bs-dropdown-link-color);
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: rgba(0, 0, 0, 0);
+            border: 0;
+            border-radius: var(--bs-dropdown-item-border-radius, 0);
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        html:not([dir=rtl]) .me-3 {
+            margin-right: .75rem !important;
+        }
+
+        .flex-grow-1 {
+            flex-grow: 1 !important;
+        }
+
+        .mb-0 {
+            margin-bottom: 0 !important;
+        }
+
+        h6, .h6 {
+            line-height: 1.375rem;
+        }
+
+        h6, .h6 {
+            font-size: 0.9375rem;
+        }
+
+        .text-muted {
+            --bs-text-opacity: 1;
+            color: #a7acb2 !important;
+        }
+
+        small, .small {
+            font-size: 0.8125rem;
+        }
+
+        a {
+            color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+            text-decoration: none;
+        }
+
+        .my-1 {
+            margin-top: .25rem !important;
+            margin-bottom: .25rem !important;
+        }
+
+        .dropdown-divider {
+            height: 0;
+            margin: var(--bs-dropdown-divider-margin-y) 0;
+            overflow: hidden;
+            border-top: 1px solid var(--bs-dropdown-divider-bg);
+            opacity: 1;
+        }
+
+        .dropdown-item:hover, .dropdown-item:focus {
+            color: var(--bs-dropdown-link-hover-color);
+            background-color: var(--bs-dropdown-link-hover-bg);
+        }
+
+        .dropdown-item:not(.disabled).active, .dropdown-item:not(.disabled):active {
+            background-color: rgba(105, 108, 255, .16);
+            color: #696cff !important;
+        }
+
+        li:not(:first-child) .dropdown-item, .dropdown-menu .dropdown-item:not(:first-child) {
+            margin-top: 2px;
+        }
+
+        .dropdown-item.active, .dropdown-item:active {
+            color: var(--bs-dropdown-link-active-color);
+            text-decoration: none;
+            background-color: var(--bs-dropdown-link-active-bg);
+        }
+
+        .bx {
+            vertical-align: middle;
+            font-size: 1.7rem;
+            line-height: 1;
+        }
+
+        .bx-md {
+            font-size: 1.375rem !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        .bg-danger {
+            --bs-bg-opacity: 1;
+            background-color: #e83838 !important;
+        }
+
+        .flex-shrink-0 {
+            flex-shrink: 0 !important;
+        }
+
+        .badge {
+            --bs-badge-padding-x: 0.77em;
+            --bs-badge-padding-y: 0.4235em;
+            --bs-badge-font-size: 0.8667em;
+            --bs-badge-font-weight: 500;
+            --bs-badge-color: #fff;
+            --bs-badge-border-radius: 0.25rem;
+            display: inline-block;
+            padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+            font-size: var(--bs-badge-font-size);
+            font-weight: var(--bs-badge-font-weight);
+            line-height: 1;
+            color: var(--bs-badge-color);
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: var(--bs-badge-border-radius);
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".userProfile").click(function () {
+                $(".profileDetails").toggle();
+
+            });
+
+            $(".application").click(function () {
+                $(".applicationList").toggle();
+
+            });
+        });
+    </script>
+
+    <HeadOutlet @rendermode="@InteractiveServer" />
+</head>
+
+<body class="light-style">
+
+
+    <Routes @rendermode="@InteractiveServer" />
+    <script src="_framework/blazor.web.js"></script>
+    <!--New Added Scripts-->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script src="vendor/libs/popper/popper.js"></script>
+    <script src="vendor/js/bootstrap.js"></script>
+
+    <script src="js/stepper.js"></script>
+    <script src="vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="vendor/libs/toastr/toastr.js"></script>
+    <script src="js/ui-toasts.js"></script>
+    <script src="js/fh-ui-popover.js"></script>
+    <script src="vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="js/fh-ui-perfect-scrollbar.js"></script>
+    <script src="js/fh-ui-custom-control.js"></script>
+    <script src="vendor/libs/select2/select2.js"></script>
+    <script src="js/fh-ui-select2.js"></script>
+
+    <script src="js/encryption.js"></script>
+
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+
+    <script src="js/radial-menu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(document).on('click', '.userProfile', function (event) {
+
+                $(".profileDetails").toggle();
+            });
+
+            $(document).on('click', '.lnkModule', function (event) {
+
+                $(".applicationList").toggle();
+            });
+
+            $(document).on('click', '.lnkPageSearch', function (event) {
+
+                $(".searchPages").toggle();
+            });
+
+
+        });
+
+
+
+
+        function initializeDataTable() {
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "pageLength": 5,
+                    "lengthMenu": [5, 10, 25, 50, 100],
+                    "lengthChange": true,
+                    columnDefs: [{
+                        'targets': [0, -1], /* column index [0,1,2,3]*/
+                        'orderable': false, /* true or false */
+                    }]
+                    // dom: '<"top"lfB>rtip', // Custom layout for length, filter, and buttons
+                    // buttons: [
+                    //     {
+                    //         extend: 'copy',
+                    //         text: '<img src="https://icons.veryicon.com/png/o/miscellaneous/simple-icon/copy-65.png" alt="Copy" style="height:25px; padding:0px; margin:0px;"/>'
+
+                    //     },
+                    //     {
+                    //         extend: 'excel',
+                    //         text: '<img src="https://cdn-icons-png.flaticon.com/512/906/906310.png" alt="Excel" style="height:25px; padding:0px; margin:0px;"/>'
+                    //     },
+
+                    //     {
+                    //         extend: 'pdf',
+                    //         text: '<img src="https://cdn-icons-png.flaticon.com/512/1037/1037335.png" alt="PDF" style="height:25px; padding:0px; margin:0px;"/>'
+                    //     }
+                    // ]
+                });
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+
+        });
+    </script>
+
+
+    <!----------END---------->
+</body>
+
+</html>

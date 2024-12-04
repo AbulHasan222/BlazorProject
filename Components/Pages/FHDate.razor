@@ -1,0 +1,57 @@
+﻿
+@using Microsoft.AspNetCore.Components.Web
+
+<input type="text" class="form-control"
+       @bind="FormattedDate"
+       @oninput="OnInput"
+       placeholder="dd/mm/yyyy"
+       maxlength="10"
+       aria-label="Date input" />
+
+@code {
+    private string rawDate;
+    private string FormattedDate
+    {
+        get => rawDate;
+        set
+        {
+            rawDate = value;
+            FormatDate();
+        }
+    }
+
+    private void FormatDate()
+    {
+        // Remove all non-digit characters
+        var digits = new string(rawDate.Where(char.IsDigit).ToArray());
+
+        if (digits.Length > 0)
+        {
+            // Format the date with slashes
+            var day = digits.Length > 2 ? digits.Substring(0, 2) : digits;
+            var month = digits.Length > 4 ? digits.Substring(2, 2) : (digits.Length > 2 ? digits.Substring(2) : "");
+            var year = digits.Length > 6 ? digits.Substring(4) : "";
+
+            // Add leading zero to day and month if needed
+            day = day.Length == 1 && int.Parse(day) > 3 ? "0" + day + "/" : day;
+            day = day.Length == 2 && int.Parse(day) > 31 ? 31 + "/" : day;
+            month = month.Length == 1 && int.Parse(month) > 1 ? "0" + month + "/" : month;
+            month = month.Length == 2 && int.Parse(month) > 12 ? 12 + "/" : month;
+
+            // Build formatted string
+            var formatted = $"{day}{(month.Length > 0 ? "/" + month : "")}{(year.Length > 0 ? "/" + year : "")}";
+
+            // Update formatted date
+            rawDate = formatted;
+        }
+        else
+        {
+            rawDate = "";
+        }
+    }
+
+    private void OnInput(ChangeEventArgs e)
+    {
+        FormattedDate = e.Value.ToString();
+    }
+}

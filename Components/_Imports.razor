@@ -1,0 +1,37 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using FintechHub.UI
+@using FintechHub.UI.Components
+@using FintechHub.UI.Components.Layout
+@using UXComponents
+
+
+@inject NavigationManager nav;
+@using SecurityAuthManager.Contracts;
+@using SecurityAuthManager.Entities;
+
+@inject IJSRuntime _jsruntime;
+@inject IUSER_REG _userLoginRepo;
+@inject AuthenticationStateProvider AuthSateProvider;
+@using UserAppSecurity.Models;
+@using UserAppSecurity.Contacts;
+@using TokenAdminManager.TokenManagement;
+@using SessionUpdManager;
+@inject ISessionService _LocalSession;
+@inject IClientSessionContext ClientSessionContext;
+@using System.Security.Claims;
+@inject IDistributedCacheManager _distributedCacheManager;
+@inject IConfiguration _config;
+@inject IUserAccess _userAccess;
+@using System.Text.Json
+@using UserAppSecurity.Models.Entity
+@using Microsoft.AspNetCore.Components.Web;
+@using UtilityManager
+@* @using UserAppHRM *@

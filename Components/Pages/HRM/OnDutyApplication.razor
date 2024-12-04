@@ -1,0 +1,29 @@
+﻿@page "/OnDutyApplication"
+<h3>OnDutyApplication</h3>
+@rendermode InteractiveServer
+<NavMenu OnFHBtnAddClick="submit" ShowButtonAdd="true" OnFHBtnViewClick="GetData" ShowButtonView="true" ShowButtonDelete="false" ShowButtonRefresh="true" OnFHBtnRefreshClick="GetData" ShowButtonExit="true" />
+
+@* <EditForm Model="onDutyApplication"> *@
+    <EmployeeInfo></EmployeeInfo>
+    <legend>On Duty Application Details</legend>
+    @* <UXC_DropDown DataSource="objdrpdown"></UXC_DropDown> *@
+
+@* </EditForm> *@
+@code {
+    OnDutyApplication onDutyApplication = new OnDutyApplication();
+    //List<Dropdown> objdrpdown = new List<Dropdown>();
+    private void submit()
+    {
+
+    }
+    private void GetData()
+    { }
+    // protected override void OnInitialized()
+    // {
+    //     objdrpdown.Add(new Dropdown { Value = "Posted Office", Text = "Posted Office" });
+    //     objdrpdown.Add(new Dropdown { Value = "Other Office", Text = "Other Office" });
+    //     objdrpdown.Add(new Dropdown { Value = "Others", Text = "Others" });
+    //     base.OnInitialized();
+    // }
+    // });
+}

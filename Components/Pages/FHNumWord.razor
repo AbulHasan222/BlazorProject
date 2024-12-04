@@ -1,0 +1,116 @@
+﻿@using System.Globalization
+
+<input type="number" class="form-control" id="numberInput" @bind="number" @bind:event="oninput" step="0.01" />
+<p>@NumberToWords(number)</p>
+
+@code {
+    private decimal number;
+
+    private string NumberToWords(decimal number)
+    {
+        if (number == 0)
+        {
+            return "zero";
+        }
+
+        var words = new System.Text.StringBuilder();
+
+        if (number < 0)
+        {
+            words.Append("minus ");
+            number = -number;
+        }
+
+        var units = new[] { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+        var teens = new[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+        var tens = new[] { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+        var thousands = new[] { "", "thousand", "million", "billion", "trillion" };
+
+        // Ensure we handle only two decimal places
+        var roundedNumber = Math.Round(number, 2);
+        var numberString = roundedNumber.ToString("F2", CultureInfo.InvariantCulture);
+        var parts = numberString.Split('.');
+        var integerPart = long.Parse(parts[0]);
+        var decimalPart = int.Parse(parts[1]);
+
+        var integerWords = ConvertIntegerToWords(integerPart, units, teens, tens, thousands);
+        var decimalWords = decimalPart > 0 ? ConvertIntegerToWords(decimalPart, units, teens, tens, thousands) : string.Empty;
+
+        if (decimalPart > 0)
+        {
+            words.Append(integerWords).Append(" point ");
+            words.Append(decimalWords);
+            if (decimalPart.ToString().Length == 3)
+            {
+                string a = decimalPart.ToString().Substring(0, 2);
+                string fullnum = integerPart.ToString() + "." + a;
+                //number = Convert.ToDecimal(fullnum);
+                //mlen = fullnum.Length;
+            };
+        }
+        else
+        {
+            words.Append(integerWords);
+        }
+
+        return words.ToString().Trim();
+    }
+
+    private string ConvertIntegerToWords(long number, string[] units, string[] teens, string[] tens, string[] thousands)
+    {
+        if (number == 0)
+        {
+            return "zero";
+        }
+
+        var words = new System.Text.StringBuilder();
+
+        var unitIndex = 0;
+
+        while (number > 0)
+        {
+            var chunk = number % 1000;
+            if (chunk > 0)
+            {
+                var chunkWords = ConvertChunkToWords(chunk, units, teens, tens);
+                words.Insert(0, chunkWords + " " + thousands[unitIndex] + " ");
+            }
+
+            number /= 1000;
+            unitIndex++;
+        }
+
+        return words.ToString().Trim();
+    }
+
+    private string ConvertChunkToWords(long number, string[] units, string[] teens, string[] tens)
+    {
+        var words = new System.Text.StringBuilder();
+
+        if (number >= 100)
+        {
+            var hundreds = number / 100;
+            words.Append(units[hundreds] + " hundred ");
+            number %= 100;
+        }
+
+        if (number >= 20)
+        {
+            var tenPart = number / 10;
+            words.Append(tens[tenPart] + " ");
+            number %= 10;
+        }
+
+        if (number >= 10)
+        {
+            words.Append(teens[number - 10] + " ");
+        }
+        else if (number > 0)
+        {
+            words.Append(units[number] + " ");
+        }
+
+        return words.ToString().Trim();
+    }
+}
+

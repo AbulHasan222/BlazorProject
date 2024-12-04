@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="IDbConnectionFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Pages\FHCell.razor" />
+    <Content Remove="Components\Pages\FHDate.razor" />
+    <Content Remove="Components\Pages\FHDropdown.razor" />
+    <Content Remove="Components\Pages\FHEmail.razor" />
+    <Content Remove="Components\Pages\FHNumWord.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\temp.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+	  <PackageReference Include="Dapper" Version="2.1.35" />
+	  <PackageReference Include="EnyimMemcachedCore" Version="3.2.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
+	  <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.0.1" />
+	  <PackageReference Include="MudBlazor" Version="7.5.0" />
+	  <PackageReference Include="NPOI" Version="2.7.1" />
+	  <PackageReference Include="SecurityAuthManager" Version="1.0.0.5" />
+	  <PackageReference Include="SessionUpdManager" Version="1.0.0" />
+	  <PackageReference Include="StackExchange.Redis" Version="2.8.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
+	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
+	  <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+	  <PackageReference Include="TokenAdminManager" Version="1.0.0" />
+	  <PackageReference Include="UtilityManager" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Axurance\Axurance.csproj" />
+    <ProjectReference Include="..\UserAppSecurity\UserAppSecurity.csproj" />
+    <ProjectReference Include="..\UXComponents\UXComponents.csproj" />
+  </ItemGroup>
+
+</Project>

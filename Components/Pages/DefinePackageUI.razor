@@ -1,0 +1,488 @@
+﻿
+
+@* -------------------------------------------------------------------- *@
+@* || Creation History || *@
+@* Author : Naznin Kohra Jhora *@
+@* Creation Date : 05-09-2024 *@
+@* --------------------------------------------------------------------- *@
+
+
+@page "/DefineUserPackageUI"
+@rendermode InteractiveServer
+
+<NavMenu ShowButtonAdd="true" OnFHBtnAddClick="SaveData" OnFHBtnViewClick="FetchData" ShowButtonView="true"
+         ShowButtonDelete="false" ShowButtonRefresh="true" OnFHBtnRefreshClick="RefreshData" OnFHBtnExitClick="Exit"
+          ShowButtonExit="true" />
+
+
+ @* Adding css *@
+<style>
+
+    /* for scrollbar */
+    .table-wrapper {
+        max-height: 300px; 
+        overflow-y: auto; 
+    }
+
+        
+        .table-wrapper::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 5px;
+        }
+
+            .table-wrapper::-webkit-scrollbar-thumb:hover {
+                background-color: #555;
+            }
+
+
+  /* for button */
+
+    .button-container {
+        display: flex;
+        gap: 10px; /* Space between buttons */
+    }
+
+
+    .uaquo-btn {
+        background-color: grey; /* Green background */
+        color: white; /* White text */
+        border: none; /* No border */
+        padding: 10px 20px; /* Some padding */
+        font-size: 18px; /* Larger text size */
+        cursor: pointer; /* Pointer/hand icon on hover */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+        .uaquo-btn:hover {
+            background-color: grey; /* Darker green on hover */
+        }
+
+    .loaquo-btn {
+        background-color: red; /* Green background */
+        color: white; /* White text */
+        border: none; /* No border */
+        padding: 10px 20px; /* Some padding */
+        font-size: 18px; /* Larger text size */
+        cursor: pointer; /* Pointer/hand icon on hover */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+        .loaquo-btn:hover {
+            background-color: red; /* Darker green on hover */
+        }
+
+
+
+</style>
+
+
+ 
+
+<EditForm Model="objRegUserPackage" style="padding-top:2%">
+    
+    @* ------>PackageInfo *@
+    <div class="form-group row" style="padding-bottom:1%;padding-bottom:3%;background-color:white;">
+        <h5>Package Information</h5>
+    <div class="form-group row" >
+        <label for="Package ID" class="col-sm-1 col-form-label" style="padding-right:130px">
+            Package ID
+        </label>
+        <div class="col-sm-3">
+
+
+                <InputNumber class="form-control" @bind-Value="objRegUserPackage.PACKAGE_ID"></InputNumber>
+
+        </div>
+
+    </div>
+
+        <div class="form-group row" style="padding-top:1%" hidden="@IsHiddenRegUserPackFunc">
+        <label for="Package Name" class="col-sm-1 col-form-label" style="padding-right:130px">
+            Package Name
+        </label>
+        <div class="col-sm-3">
+            <UXC_TextBox CssClass="form-control"  @bind-Value="objRegUserPackage.PACKAGE_NAME">
+            </UXC_TextBox>
+        </div>
+    </div>
+
+        <div class="form-group row" style="padding-top:1%" hidden="@IsHiddenRegUserPackFunc">
+        <label for="Description" class="col-sm-1 col-form-label" style="padding-right:130px">
+            Description
+        </label>
+        <div class="col-sm-3">
+            <UXC_TextBox CssClass="form-control" @bind-Value="objRegUserPackage.PACKAGE_DESC">
+            </UXC_TextBox>
+        </div>
+    </div>
+
+        @* <div class="form-group row" style="padding-top:1%" hidden="@IsHiddenRegUserPackFunc">
+        <label for="Service Type ID" class="col-sm-1 col-form-label" style="padding-right:130px">
+            Operation Type ID
+        </label>
+        <div class="col-sm-3">
+            <UXC_TextBox CssClass="form-control">
+            </UXC_TextBox>
+        </div>
+    </div> *@
+    </div>
+
+    <div class="form-group row" style="padding-top:3%; padding-left:50%; padding-right:50%; padding-bottom:3%"></div>
+
+    @* ----->Upper_Table *@
+    <div class="form-group row" style="padding-top:3%; padding-left:8%; padding-right:25%; background-color:white; padding-bottom:5%" hidden="@IsHiddenRegUserPackFunc">
+        <h5 style="text-align:center">Assigned Funtion In Package</h5>
+        <div class="table-wrapper" style="padding-top:2%;">
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th>Remove</th>
+                    <th>Function ID</th>
+                    <th>ADD Flag</th>
+                    <th>EDIT Flag</th>
+                    <th>DEL Flag</th>
+                    <th>VIEW Flag</th>
+                    <th>AUTH Flag</th>
+                    <th>PROCESS Flag</th>
+                    <th>REPORT_VIEW Flag</th>
+                    <th>REPORT_PRINT Flag</th>
+                    <th>REPORT_GEN Flag</th>
+                    <th>OFFICE_OPS Flag</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var obj in objRegUserPackageFuncList)
+                    
+                {
+                    <tr>
+                           
+                            <td><input type="checkbox" id="isUnAssign" checked="@checkboxStates.GetValueOrDefault(obj, false)"
+                                       @onchange="e => OnCheckboxChange(obj, e)" />
+                            </td>
+                        <td>@obj.FUNCTION_ID</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_MAINT_ADD_FLAG"></InputCheckbox>Add</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_MAINT_EDIT_FLAG"></InputCheckbox>Edit</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_MAINT_DEL_FLAG"></InputCheckbox>Delete</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_MAINT_VIEW_FLAG"></InputCheckbox>View</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_MAINT_AUTH_FLAG"></InputCheckbox>Auth</td>
+                        <td><InputCheckbox @bind-Value=" obj.ALLOW_PROCESS_FLAG"></InputCheckbox>Process</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_REPORT_VIEW_FLAG"></InputCheckbox>Rep_View</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_REPORT_PRINT_FLAG"></InputCheckbox>Rep_Print</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_REPORT_GEN_FLAG"></InputCheckbox>Rep_Gen</td>
+                        <td><InputCheckbox @bind-Value="obj.ALLOW_ANY_OFFICE_OPS_FLAG"></InputCheckbox>OPS</td>
+
+
+                            
+                        
+                    </tr>
+                        
+                }
+            </tbody>
+        </table>
+    
+        </div>
+    </div>
+
+   @* -----button *@
+    <div class="button-container" style="padding-top:2%; padding-left:30%; padding-bottom:2%; display: inline-block;" hidden="@IsHiddenRegUserPackFunc">
+        <button class="uaquo-btn" >&uarr;</button>
+        <button class="uaquo-btn">&uarr;&nbsp;&uarr;</button>
+        
+        <button class="loaquo-btn" @onclick="() => AddInUnAssignRegpackList(TemPackageFuncList)">&#8595;</button>
+        <button class="loaquo-btn" @onclick="() => AddInUnAssignRegpackListAtaTime(objRegUserPackageFuncList)">&#8595;&nbsp;&#8595;</button>
+        
+
+
+    </div>
+
+     
+   @*  ----->Lower_Table  *@
+    <div class="form-group row" style="padding-top:3%; padding-left:8%; padding-right:25%; background-color:white;" hidden="@IsHiddenRegUserPackFunc">
+        <h5 style="text-align:center">Category</h5>
+        <div class="form-group row" style="padding-top:2%; padding-left:8%; padding-right:75%">
+
+            <label for="App Lists" class="col-sm-2 col-form-label" style="">
+                App Lists
+            </label>
+            <UXC_DropDown  DataSource="@objdrpdown" @bind-SelectedValue="selectedValue"></UXC_DropDown>
+        
+        </div>
+       
+  </div>
+
+
+        
+    
+
+
+</EditForm>
+
+
+
+@code {
+    #region user_defined_variable
+
+    string msg = "";
+    bool IsHiddenRegUserPackFunc = true;
+    public string selectedValue { get; set; }
+
+    private Dictionary<REG_USER_PACKAGE_FUNCTION, bool> checkboxStates = new Dictionary<REG_USER_PACKAGE_FUNCTION, bool>();
+    List<Dropdown> objdrpdown = new List<Dropdown>();
+    #endregion
+
+
+
+    #region class_level_variables
+
+    REG_USER_PACKAGE objRegUserPackage = new REG_USER_PACKAGE();
+    MD_APP_FUNCTIONS objAppFunction = new MD_APP_FUNCTIONS();
+    REG_USER_PACKAGE_FUNCTION objRegUserPackageFunc = new REG_USER_PACKAGE_FUNCTION();
+
+    //For assign
+    List<REG_USER_PACKAGE_FUNCTION> objRegUserPackageFuncList = new List<REG_USER_PACKAGE_FUNCTION>();
+
+    //For Unassign
+    List<REG_USER_PACKAGE_FUNCTION> TemPackageFuncList = new List<REG_USER_PACKAGE_FUNCTION>();
+    List<REG_USER_PACKAGE_FUNCTION> objUnAssignRegUserPackageFuncList = new List<REG_USER_PACKAGE_FUNCTION>();
+
+    //For Dropdown
+    List<MD_APP_LIST> objAppList = new List<MD_APP_LIST>();
+
+    #endregion
+
+    #region page_load
+
+    protected override void OnInitialized()
+    {
+
+
+    }
+    #endregion
+
+
+    #region user_defined_method
+
+    private void FetchUserPackage()
+    {
+        if (string.IsNullOrEmpty((objRegUserPackage.PACKAGE_ID).ToString()))
+        {
+            _jsruntime.InvokeVoidAsync("alert", "Package ID must be declared");
+
+        }
+        objRegUserPackage = _userAccess.FetchRegUserPackage(objRegUserPackage.PACKAGE_ID);
+    }
+
+    private void FetchAssignedFuntionInPackage()
+    {
+        objRegUserPackageFuncList = _userAccess.FetchAssignedRegUserPackageFuntion(objRegUserPackage.PACKAGE_ID);
+
+
+    }
+
+    private void IsTrueOrFalseForAssignedFuntionInPackage()
+    {
+        foreach (var obj in objRegUserPackageFuncList)
+        {
+            if (obj.ALLOW_MAINT_ADD_FLAG)
+            {
+                obj.ALLOW_MAINT_ADD_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_MAINT_EDIT_FLAG)
+            {
+                obj.ALLOW_MAINT_EDIT_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_MAINT_DEL_FLAG)
+            {
+                obj.ALLOW_MAINT_DEL_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_MAINT_VIEW_FLAG)
+            {
+                obj.ALLOW_MAINT_VIEW_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_MAINT_AUTH_FLAG)
+            {
+                obj.ALLOW_MAINT_AUTH_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_PROCESS_FLAG)
+            {
+                obj.ALLOW_PROCESS_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_REPORT_VIEW_FLAG)
+            {
+                obj.ALLOW_REPORT_VIEW_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_REPORT_PRINT_FLAG)
+            {
+                obj.ALLOW_REPORT_PRINT_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_REPORT_GEN_FLAG)
+            {
+                obj.ALLOW_REPORT_GEN_FLAG = Convert.ToBoolean(1);
+            }
+            if (obj.ALLOW_ANY_OFFICE_OPS_FLAG)
+            {
+                obj.ALLOW_ANY_OFFICE_OPS_FLAG = Convert.ToBoolean(1);
+            }
+
+
+
+        }
+    }
+
+    private void UpdateAssignedFunctionsInPackage()
+    {
+        if (objRegUserPackageFunc.isAdd)
+        {
+
+            string successMessage = _userAccess.UpdateAssignedRegUserPackageFuntion(objRegUserPackageFuncList);
+
+            if (!string.IsNullOrEmpty(successMessage))
+            {
+                msg = "is not updated. Error msg : " + successMessage;
+                _jsruntime.InvokeVoidAsync("alert", "Package ID : " + objRegUserPackage.PACKAGE_ID + " " + msg);
+                RefreshData();
+
+            }
+            else
+            {
+                msg = "is updated successfully.";
+                _jsruntime.InvokeVoidAsync("alert", "Package ID : " + objRegUserPackage.PACKAGE_ID + " " + msg);
+                RefreshData();
+            }
+        }
+    }
+
+
+
+    private void RemoveAssignedFunctionsFromPackage(int Function_ID, MouseEventArgs e)
+    {
+        foreach (var obj in objRegUserPackageFuncList)
+        {
+            if (obj.FUNCTION_ID == Function_ID)
+            {
+                obj.isDelete = true;
+            }
+        }
+
+
+    }
+
+
+
+
+    private void SaveData()
+    {
+        IsTrueOrFalseForAssignedFuntionInPackage();
+        UpdateAssignedFunctionsInPackage();
+    }
+
+    private void FetchData()
+    {
+        IsHiddenRegUserPackFunc = false;
+        FetchUserPackage();
+        FetchAssignedFuntionInPackage();
+        FetchMDAppList();
+        MDAppListDropDown();
+    }
+
+    private void RefreshData()
+    {
+        objRegUserPackage = new REG_USER_PACKAGE();
+        objAppFunction = new MD_APP_FUNCTIONS();
+        objRegUserPackageFunc = new REG_USER_PACKAGE_FUNCTION();
+        objRegUserPackageFuncList = new List<REG_USER_PACKAGE_FUNCTION>();
+        TemPackageFuncList = new List<REG_USER_PACKAGE_FUNCTION>();
+        objUnAssignRegUserPackageFuncList = new List<REG_USER_PACKAGE_FUNCTION>();
+        objAppList = new List<MD_APP_LIST>();
+        IsHiddenRegUserPackFunc = true;
+    }
+
+    private void Exit()
+    {
+        _jsruntime.InvokeVoidAsync("alert", "Are you sure to exit?");
+        nav.NavigateTo("/home");
+
+    }
+
+
+    #endregion
+
+
+    #region table_reg_user_package_function
+
+    //Remove From Assign
+    private void IsCheckedUnAssign(REG_USER_PACKAGE_FUNCTION package, bool isUnAssign)
+    {
+        if (isUnAssign == true)
+        {
+            TemPackageFuncList.Add(package);
+            string s = selectedValue;
+
+        }
+        else
+        {
+            TemPackageFuncList.Remove(package);
+
+        }
+
+
+    }
+
+    private void OnCheckboxChange(REG_USER_PACKAGE_FUNCTION package, ChangeEventArgs e)
+    {
+        bool isChecked = (bool)e.Value;
+        checkboxStates[package] = isChecked;
+        IsCheckedUnAssign(package, isChecked);
+
+
+    }
+
+    private void AddInUnAssignRegpackList(List<REG_USER_PACKAGE_FUNCTION> TemPackageFuncList)
+    {
+        foreach(var obj in TemPackageFuncList)
+        {
+            objUnAssignRegUserPackageFuncList.Add(obj);
+            objRegUserPackageFuncList.Remove(obj);
+        }
+        TemPackageFuncList.Clear();
+    }
+
+    private void AddInUnAssignRegpackListAtaTime(List<REG_USER_PACKAGE_FUNCTION> objRegUserPackageFuncList)
+    {
+        foreach (var obj in objRegUserPackageFuncList)
+        {
+            objUnAssignRegUserPackageFuncList.Add(obj);
+
+        }
+        objRegUserPackageFuncList.Clear();
+    }
+
+
+    //for DropDown
+
+    private void FetchMDAppList()
+    {
+        objAppList = _userAccess.MdAppListGA();
+    }
+
+    private void MDAppListDropDown()
+    {
+        foreach (var obj in objAppList)
+        {
+            objdrpdown.Add(new Dropdown { Value = obj.APP_ID.ToString(), Text = obj.APP_ID.ToString() });
+        }
+    }
+
+    
+    
+
+    #endregion
+
+
+}

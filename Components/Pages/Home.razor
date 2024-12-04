@@ -1,0 +1,74 @@
+﻿@page "/Home"
+
+@using System.Text.Json
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+
+<PageTitle>Home</PageTitle>
+<AuthorizeView>
+    <Authorized>
+        <NavMenu ShowButtonAdd="false" ShowButtonView="false" ShowButtonDelete="false" ShowButtonRefresh="false" ShowButtonExit="false" />
+        <div style="display: flex; justify-content: center; align-items: center; height: 90vh; margin: 0;">
+            <img src="img/FintechHub.png" alt="FintechHub" style="max-width: 100%; height: auto;" />
+        </div>
+
+    </Authorized>
+    <NotAuthorized>
+        <LandingPage></LandingPage>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    protected async override Task OnAfterRenderAsync(bool isrender)
+    {
+        if (isrender)
+        {
+            try
+            {
+                List<UserAccessInfo> UserAccessInfosList = new List<UserAccessInfo>();
+                UserAccessInfo objUserAccessInfo = new UserAccessInfo();
+                objUserAccessInfo.FunctionName = "Test";
+                objUserAccessInfo.QuickRouteNo = "test";
+                objUserAccessInfo.AppRoute = "Test";
+                var userName = string.Empty;
+                var uri = new Uri(nav.Uri);
+                var queryParameters = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+                if (queryParameters.TryGetValue("user", out var userValue))
+                {
+                    userName = userValue;
+                    var applicationId = _config["ApplicationId"];
+                    userName = UtilityHelper.ConvertToDecrypt(userName);
+                    UserAccessInfosList = _userLoginRepo.GET_USER_ACCESS_LIST(userName, applicationId, "F", 0);
+                    UserAccessInfosList.Add(objUserAccessInfo);
+                    _LocalSession.AddItem("App_Route", JsonSerializer.Serialize(UserAccessInfosList));
+                }
+                else
+                {
+
+                    userName = await _LocalSession.GetItem("UserName");
+                    if (string.IsNullOrEmpty(userName))
+                    {
+                        userName = "User parameter not found";
+                        nav.NavigateTo(_config["LoginApp"]);
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                nav.NavigateTo(_config["LoginApp"]);
+            }
+        }
+
+    }
+}
+
+
+
+
+
+
+
+

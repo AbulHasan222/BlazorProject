@@ -1,0 +1,26 @@
+﻿@page "/";
+@layout Layout.EmptyLayout;
+@rendermode InteractiveServer
+
+<div></div>
+
+@code {
+    protected override async  Task OnAfterRenderAsync(bool isrender)
+    {
+        if (isrender)
+        {
+            nav.NavigateTo(_config["LoginApp"]);
+        }
+        
+       
+    }
+
+}
+
+
+<style>
+
+    .text-center{
+        padding-top:300px !important;
+    }
+</style>

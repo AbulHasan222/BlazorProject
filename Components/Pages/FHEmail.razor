@@ -1,0 +1,29 @@
+﻿
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+@using FintechHub.UI.Models
+
+<EditForm Model="@emailModel">
+
+    <div>
+        
+        <InputText id="email" class="form-control" @bind-Value="emailModel.Email" />
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+    </div>
+</EditForm>
+
+@code {
+    private EmailModel emailModel = new EmailModel();
+
+
+    public class EmailModel
+    {
+
+        [CustomValidations(ErrorMessage = "Invalid email address.")]
+        public string Email { get; set; }
+    }
+
+
+}

@@ -1,0 +1,292 @@
+﻿
+@rendermode InteractiveServer
+
+
+<nav class="sidebar">
+    <div class="menu_content">
+        <form @onsubmit="()=>RouteChange(inputPageNum)">
+            <ul style="padding-left:0px">
+                <li>
+
+
+                    <InputText @bind-Value="inputPageNum" maxlength="4" autofocus placeholder="Quick Route.." @onblur="()=>RouteChange(inputPageNum)" />
+
+
+                    <span class="qrSearch"><i class="bx bx-fast-forward-circle" style="font-size:20px"></i></span>
+                </li>
+            </ul>
+        </form>
+        <ul class="menu_items menu_section">
+            <li class="item">
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-search"></i>
+                        <span class="tooltip">search</span>
+                    </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-filter"></i>
+                        <span class="tooltip">Recent</span>
+                    </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx bx-heart"></i>
+                        <span class="tooltip">Favourites</span>
+                    </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-grid-alt"></i>
+                        <span class="tooltip">Modules</span>
+                    </span>
+                </a>
+                <div class=" applicationList dropdown-menu dropdown-menu-end p-0" b-ys1tephrh2="">
+                    <div class="dropdown-menu-header border-bottom" b-ys1tephrh2="">
+                        <div class="dropdown-header d-flex align-items-center py-3" b-ys1tephrh2="">
+                            <h6 class="mb-0 me-auto" b-ys1tephrh2="">Shortcuts</h6>
+                            <a href="javascript:void(0)" class="dropdown-shortcuts-add py-2" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add shortcuts" data-bs-original-title="Add shortcuts" b-ys1tephrh2=""><i class="bx bx-plus-circle text-heading" b-ys1tephrh2=""></i></a>
+                        </div>
+                    </div>
+                    <div class="dropdown-shortcuts-list scrollable-container ps" b-ys1tephrh2="">
+                        <div class="row row-bordered overflow-visible g-0" b-ys1tephrh2="">
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-calendar bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="app-calendar.html" class="stretched-link" b-ys1tephrh2="">Calendar</a>
+                                <small b-ys1tephrh2="">Appointments</small>
+                            </div>
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-food-menu bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="app-invoice-list.html" class="stretched-link" b-ys1tephrh2="">Invoice App</a>
+                                <small b-ys1tephrh2="">Manage Accounts</small>
+                            </div>
+                        </div>
+                        <div class="row row-bordered overflow-visible g-0" b-ys1tephrh2="">
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-user bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="app-user-list.html" class="stretched-link" b-ys1tephrh2="">User App</a>
+                                <small b-ys1tephrh2="">Manage Users</small>
+                            </div>
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-check-shield bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="app-access-roles.html" class="stretched-link" b-ys1tephrh2="">Role Management</a>
+                                <small b-ys1tephrh2="">Permission</small>
+                            </div>
+                        </div>
+                        <div class="row row-bordered overflow-visible g-0" b-ys1tephrh2="">
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-pie-chart-alt-2 bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="index.html" class="stretched-link" b-ys1tephrh2="">Dashboard</a>
+                                <small b-ys1tephrh2="">User Dashboard</small>
+                            </div>
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-cog bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="pages-account-settings-account.html" class="stretched-link" b-ys1tephrh2="">Setting</a>
+                                <small b-ys1tephrh2="">Account Settings</small>
+                            </div>
+                        </div>
+                        <div class="row row-bordered overflow-visible g-0" b-ys1tephrh2="">
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-help-circle bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="pages-faq.html" class="stretched-link" b-ys1tephrh2="">FAQs</a>
+                                <small b-ys1tephrh2="">FAQs &amp; Articles</small>
+                            </div>
+                            <div class="dropdown-shortcuts-item col" b-ys1tephrh2="">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-3" b-ys1tephrh2=""><i class="bx bx-window-open bx-26px text-heading" b-ys1tephrh2=""></i></span>
+                                <a href="modal-examples.html" class="stretched-link" b-ys1tephrh2="">Modals</a>
+                                <small b-ys1tephrh2="">Useful Popups</small>
+                            </div>
+                        </div>
+                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;" b-ys1tephrh2=""><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;" b-ys1tephrh2=""></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;" b-ys1tephrh2=""><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;" b-ys1tephrh2=""></div></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item">
+                <a href="/home" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-home-alt"></i>
+                        <span class="tooltip">Home</span>
+                    </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-bell bx-md"></i>
+                        <span class="tooltip">Notifications</span>
+                        <!--<span class="badge rounded-pill bg-danger badge-dot badge-notifications border" b-ys1tephrh2=""></span>-->
+                    </span>
+                </a>
+            </li>
+            <!--<li>
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-sun" id="darkLight"></i>
+                    </span>
+                </a>
+
+            </li> -->
+        </ul>
+
+        <ul class="menu_items bottom_section">
+            <li class="item menu-user">
+                <a class="userProfile nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="avatar avatar-online">
+                        <img src="img/avatars/1.png" alt="" class="rounded-circle">
+                    </div>
+                </a>
+                <ul class=" profileDetails dropdown-menu dropdown-menu-end" style="">
+
+                    <li>
+                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3"><div class="avatar avatar-online"><img src="img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle"></div></div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0">John Doe</h6>
+                                    <small class="text-muted">Admin</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li><div class="dropdown-divider my-1"></div></li>
+                    <li><a class="dropdown-item" href="#"><i class="bx bx-user bx-md me-3"></i><span>My Profile</span></a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bx bx-cog bx-md me-3"></i><span>Settings</span></a></li>
+                    <li>
+                        <a class="dropdown-item" href="pages-account-settings-billing.html">
+                            <span class="d-flex align-items-center align-middle">
+                                <i class="flex-shrink-0 bx bx-credit-card bx-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                                <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li><div class="dropdown-divider my-1"></div></li>
+                    <li><a class="dropdown-item" href="pages-pricing.html"><i class="bx bx-dollar bx-md me-3"></i><span>Pricing</span></a></li>
+                    <li><a class="dropdown-item" href="pages-faq.html"><i class="bx bx-help-circle bx-md me-3"></i><span>FAQ</span></a></li>
+                    <li><div class="dropdown-divider my-1"></div></li>
+                    <li><a class="dropdown-item" href="auth-login-cover.html" target="_blank"><i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span></a></li>
+
+                </ul>
+            </li>
+            <li class="item">
+                <a href="#" class="nav_link nav-link">
+                    <span class="navlink_icon">
+                        <i class="bx bx-cog"></i>
+                    </span>
+                    <span class="tooltip">Settings</span>
+                </a>
+            </li>
+            <li>
+                <button class="nav_link nav-link" @onclick="Logout">
+               
+                    <span class="navlink_icon">
+                        <i style="color: #cb2027;font-weight:700" class="bx bx-power-off"></i>
+                    </span>
+                
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+@code {
+    USER_LOGIN obj_user_login = new USER_LOGIN();
+
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthStat { get; set; }
+    [Parameter]
+    public string inputPageNum { get; set; }
+
+
+    List<UserAccessInfo> ListOfQuikRoutes = new List<UserAccessInfo>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            ListOfQuikRoutes = JsonSerializer.Deserialize<List<UserAccessInfo>>(await _LocalSession.GetItem("App_Route"));
+
+        }
+    }
+
+
+    private async void RouteChange(string routPage)
+    {
+        // string pgeNum = Get_Page_Number_Padded(routPage);
+        if (ListOfQuikRoutes.Count > 0)
+        {
+            UserAccessInfo objRoute = ListOfQuikRoutes.FirstOrDefault(item => item.QuickRouteNo == routPage);
+            if (objRoute != null)
+            {
+                nav.NavigateTo(objRoute.AppRoute);
+            }
+            else
+            {
+                await _jsruntime.InvokeVoidAsync("alert", "Page not Found");
+            }
+        }
+
+
+    }
+    private string Get_Page_Number_Padded(string pageNum)
+    {
+        string padNum = string.Empty;
+        if (!string.IsNullOrEmpty(pageNum))
+        {
+            padNum = pageNum.PadLeft(3, '0');
+
+        }
+        return padNum;
+    }
+
+    private async Task Logout()
+    {
+
+        try
+        {
+            var user = (await AuthStat).User;
+            obj_user_login.USER_NAME = await _LocalSession.GetItem("UserName");
+            var ObjUserLogin = ClientSessionContext.GetUserLoginDetails();
+
+            obj_user_login.SESSION_ID = ObjUserLogin.SESSION_ID;
+            obj_user_login.SESSION_TERMINAL_IP = ObjUserLogin.SESSION_TERMINAL_IP;
+            obj_user_login.TERMINAL_IP = ObjUserLogin.TERMINAL_IP;
+            obj_user_login.BROWSER = ObjUserLogin.BROWSER;
+
+            if (user.Identity.IsAuthenticated)
+            {
+                var CustomAuthSateProvider = (AuthenticationStateProviderRepo)AuthSateProvider;
+                CustomAuthSateProvider.UpdateAuthenticationState("");
+
+                var response = _userLoginRepo.userLogout(obj_user_login);
+
+                if (string.IsNullOrEmpty(response))
+                {
+
+                    await _LocalSession.RemoveItem("accessToken");
+                    await _LocalSession.RemoveItem("UserName");
+                    //string token = _distributedCacheManager.GetTokenFromCache(obj_user_login.USER_NAME);
+                    _distributedCacheManager.DeleteTokenFromCache(obj_user_login.USER_NAME);
+                    nav.NavigateTo(_config["LoginApp"]);
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+
+            await _jsruntime.InvokeVoidAsync("alert", ex.Message);
+        }
+
+    }
+
+}
+

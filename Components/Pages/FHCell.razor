@@ -1,0 +1,26 @@
+﻿@page "/phone-form"
+@using System.ComponentModel.DataAnnotations
+
+
+<EditForm Model="@phoneNumberModel" OnValidSubmit="HandleValidSubmit">
+    <InputText class="form-control" id="phoneNumber" @bind-Value="phoneNumberModel.PhoneNumber" maxlength="11" />
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+</EditForm>
+
+@code {
+    private PhoneNumberModel phoneNumberModel = new PhoneNumberModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle the form submission logic here
+    }
+
+    public class PhoneNumberModel
+    {
+        [Required(ErrorMessage = "Phone number is required.")]
+        [StringLength(11, ErrorMessage = "Phone number must be 11 digits. Only Numbers are allowed")]
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "Phone number must be 11 digits.Only Numbers are allowed")]
+        public string PhoneNumber { get; set; }
+    }
+}

@@ -1,0 +1,468 @@
+﻿@page "/RegUserGroupUI"
+
+@rendermode InteractiveServer
+
+
+<NavMenu OnFHBtnAddClick="submit" ShowButtonAdd="true" OnFHBtnViewClick="GetData" ShowButtonView="true" ShowButtonDelete="false" ShowButtonRefresh="true" OnFHBtnRefreshClick="RefreshData" ShowButtonExit="true" />
+
+<style>
+    .table-wrapper {
+        max-height: 300px; /* Adjust this value to control the height of the table container */
+        overflow-y: auto; /* Adds a vertical scrollbar */
+    }
+
+        /* Optional: Style the scrollbar (this works on modern browsers) */
+        .table-wrapper::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 5px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        .flex-container {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            gap: 10px; /* Space between items */
+        }
+
+        .flex-item {
+            margin: 0; /* Optional: remove default margin/padding */
+        }
+
+        .u43_input {
+            flex: 1; /* Allow the select box to grow */
+        }
+
+        .u45_input {
+            flex: 2; /* Allow the input box to grow more */
+        }
+</style>
+
+
+
+<div class="card" style="width:100%;height:850px;overflow:hidden;overflow-y:scroll;background:#f2f2f2;">
+    <div class="card" style="margin:20px;padding:10px;">
+        <h3>Group Information</h3>
+
+        @if (isSuccess)
+        {
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" @onclick="close">
+                    <span>&times;&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp @msg</span>
+                </button>
+            </div>
+        }
+
+        <EditForm Model="@group">
+         <hr />
+         
+         <!-- User Controls -->
+         <div class="card">
+            <div class="card-body">
+
+                <div class="form-group row">
+                    <label for="groupName" class="col-sm-2 col-form-label" style="padding-right:95px">Group Name</label>
+                    <div class="col-sm-3 flex-container">
+                        <UXC_TextBox CssClass="form-control" placeholder="Enter Group Name" @bind-Value="group.GROUP_NAME"></UXC_TextBox>
+
+                        <div id="groupNameAll" class="ax_default icon flex-item" style="cursor: pointer;">
+                            <img id="u110_img" class="img" src="https://files.axshare.com/gsc/8YIP1F/44/f9/04/44f904fee2b645648eec5d20c3df49a5/images/define_user_groups/u110.svg?pageId=20f37085-f2c6-484c-8022-1c796d34d6af" tabindex="0" style="outline: none;">
+                            <div id="u110_text" class="text" style="display:none; visibility: hidden;">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group row">
+                    <label for="groupDescrip" class="col-sm-2 col-form-label" style="padding-right:95px">Group Description
+                    </label>
+                    <div class="col-sm-3">
+                            <UXC_TextBox CssClass="form-control" placeholder="Enter Group Description" @bind-Value="group.GROUP_DESCRIP"></UXC_TextBox>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+
+        <!-- Table Section -->
+        <div class="card">
+            <div class="card-body">
+                    <div class="row" hidden="@IsHideTable">
+
+                        <!-- Left Table -->
+                        <div class="col-md-6" style="padding-top:1%; width:450px; padding-left:-20%; border:10px">
+                            <h6 style="text-align:center">Unassigned Users</h6>
+
+                            <div class="flex-container">
+                                <select id="u43_input" class="u43_input flex-item">
+                                    <option class="u43_input_option" value="----Please Select----">----Please Select----</option>
+                                    <option class="u43_input_option" value="Id">Id</option>
+                                    <option class="u43_input_option" value="Name">Name</option>
+                                    <option class="u43_input_option" value="Branch Id">Branch Id</option>
+                                </select>
+
+                                <div id="u45" class="ax_default text_field hint flex-item">
+                                    <div id="u45_div" class="hint"></div>
+                                    <input id="u45_input" type="text" value="" class="u45_input hint flex-item">
+                                </div>
+                            </div>
+
+                            <div class="table-wrapper">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="table-dark">
+                                            <th>Add</th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Branch ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ListOfUAUsers)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" id="isUnAssign" checked="@checkboxStates.GetValueOrDefault(item, false)" @onchange="e => OnUAssignedCheckboxChange(item, e)" />
+                                                </td>
+                                                <td>@item.USER_ID</td>
+                                                <td>@item.USER_NAME</td>
+                                                <td>@item.HOME_OFFICE_ID</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- buttons -->
+                        <div class="col-md-2" style="padding-top:10%; padding-left:7%">
+                            <button class="btn btn-primary" @onclick="() => AddIntoUnAssignListAtATime(PermRegUserList)">
+                                &laquo;&laquo;
+                            </button>
+
+                            <div style="height:10px">
+                            </div>
+
+                            <button class="btn btn-primary" style="padding-left:7%; width:58px" @onclick="() => AddIntoUnAssignList(TempRegUserList)">
+                                &laquo;
+                            </button>
+
+                            <div style="height:10px">
+                            </div>
+
+                            <button class="btn btn-primary" style="padding-left:7%; width:58px" @onclick="() => AddIntoAssignListAtATime(ListOfUsers)">
+                                &raquo; &raquo;
+                            </button>
+
+                            <div style="height:10px">
+                            </div>
+
+                            <button class="btn btn-primary" style="padding-left:7%; width:58px" @onclick="() => AddIntoAssignList(TempRegUserList)">
+                                &raquo;
+                            </button>
+                        </div>
+
+
+                        <!-- Right Table -->
+                        <div class="col-md-6" style="padding-top:1%; width:450px; border:10px">
+                            <h6 style="text-align:center">Assigned Users</h6>
+
+                            <div class="flex-container">
+                                <select id="u43_input" class="u43_input flex-item">
+                                    <option class="u43_input_option" value="----Please Select----">----Please Select----</option>
+                                    <option class="u43_input_option" value="Id">Id</option>
+                                    <option class="u43_input_option" value="Name">Name</option>
+                                    <option class="u43_input_option" value="Branch Id">Branch Id</option>
+                                </select>
+                                <div id="u45" class="ax_default text_field hint flex-item">
+                                    <div id="u45_div" class="hint"></div>
+                                    <input id="u45_input" type="text" value="" class="u45_input hint flex-item">
+                                </div>
+                            </div>
+
+                            <div class="table-wrapper">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="table-dark">
+                                            <th>Remove</th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Branch ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-wrapper">
+                                        @foreach (var item in PermRegUserList)
+                                        {
+                                            <tr>
+                                                <td>
+                                              
+                                                     <input type="checkbox" id="isAssign" checked="@checkboxStates.GetValueOrDefault(item, false)" @onchange="e => OnAssignedCheckboxChange(item, e)" />
+                                                </td>
+                                                <td>@item.USER_ID</td>
+                                                <td>@item.USER_NAME</td>
+                                                <td>@item.HOME_OFFICE_ID</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:20%"></div>
+            </div>
+        </div>
+        </EditForm>
+
+        <br />
+
+        <!-- Table Group List should be on Modal -->
+        <div class="card">
+            <div class="card-body">
+                @if (ListOfGroup.Count > 0)
+                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="table-dark">
+                                <th>Group Name</th>
+                                <th>Group Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ListOfGroup)
+                            {
+                                <tr>
+                                    <td>@item.GROUP_NAME</td>
+                                    <td>@item.GROUP_DESCRIP</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@code {
+    REG_USER_GROUPS group = new REG_USER_GROUPS();
+    List<REG_USER_GROUPS> ListOfGroup = new List<REG_USER_GROUPS>();
+
+    REG_USER_GROUP_USERS objRegUserGroupUsers = new REG_USER_GROUP_USERS();
+
+    USER_PROFILE users = new USER_PROFILE();
+    List<USER_PROFILE> ListOfUsers = new List<USER_PROFILE>();
+    List<USER_PROFILE> ListOfUAUsers = new List<USER_PROFILE>();
+    List<USER_PROFILE> ListOfAUsers = new List<USER_PROFILE>();
+    private Dictionary<USER_PROFILE, bool> checkboxStates = new Dictionary<USER_PROFILE, bool>();
+
+    List<USER_PROFILE> TempRegUserList = new List<USER_PROFILE>();
+    List<USER_PROFILE> PermRegUserList = new List<USER_PROFILE>();
+    List<USER_PROFILE> ListforSave = new List<USER_PROFILE>();
+
+    bool IsChecked = false;
+
+    string msg = "";
+    bool isSuccess = false;
+    bool IsHideTable = true;
+
+    private void submit()
+    {
+        foreach (var obj in ListforSave)
+        {
+            objRegUserGroupUsers.GROUP_ID = group.GROUP_ID;
+            objRegUserGroupUsers.USER_ID = obj.USER_ID;
+            objRegUserGroupUsers.APPROVE_STATUS_FLAG = 0;
+        }
+
+
+        REG_USER_GROUP_USERS resUserGroup = _userAccess.SaveGroupUsers(objRegUserGroupUsers);
+
+        if (!string.IsNullOrEmpty(resUserGroup.ERROR_MSG))
+        {
+            _jsruntime.InvokeVoidAsync("alert", "Update Failed!" + resUserGroup.ERROR_MSG);
+            RefreshData();
+        }
+        else
+        {
+            _jsruntime.InvokeVoidAsync("alert", "User updated successfully");
+            RefreshData();
+        }
+    }
+
+    private void GetData()
+    {
+
+        ListOfGroup = _userAccess.GetGroupGA(group.GROUP_NAME).ToList();
+
+        foreach (var obj in ListOfGroup)
+        {
+            group.GROUP_ID = obj.GROUP_ID;
+            group.GROUP_NAME = obj.GROUP_NAME;
+            group.GROUP_DESCRIP = obj.GROUP_DESCRIP;
+        }
+
+        FetchUnAssignedData(group.GROUP_NAME);
+        FetchAssignedData(group.GROUP_NAME);
+    }
+
+    private void close()
+    {
+        isSuccess = false;
+        group = new REG_USER_GROUPS();
+        ListOfGroup = null;
+    }
+
+    private void Exit()
+    {
+        nav.NavigateTo("/Home");
+    }
+
+    private void RefreshData()
+    {
+        group = new REG_USER_GROUPS();
+        ListOfGroup = new List<REG_USER_GROUPS>();
+        ListOfUsers = new List<USER_PROFILE>();
+        ListOfUAUsers = new List<USER_PROFILE>();
+        ListOfAUsers = new List<USER_PROFILE>();
+        TempRegUserList = new List<USER_PROFILE>();
+        PermRegUserList = new List<USER_PROFILE>();
+        ListforSave = new List<USER_PROFILE>();
+
+        IsHideTable = true;
+    }
+
+
+    //new methods
+    private void FetchUnAssignedData(string groupName)
+    {
+        ListOfUAUsers = _userAccess.FetchUnAssignedUsers(group.GROUP_NAME).ToList();
+        IsHideTable = false;
+
+        foreach (var user in ListOfUAUsers)
+        {
+            checkboxStates[user] = false;
+        }
+    }
+    private void FetchAssignedData(string groupName)
+    {
+        PermRegUserList = _userAccess.FetchAssignedUsers(group.GROUP_NAME).ToList();
+        IsHideTable = false;
+
+        foreach (var user in PermRegUserList)
+        {
+            checkboxStates[user] = false;
+        }
+    }
+
+
+
+
+    private void OnUAssignedCheckboxChange(USER_PROFILE users, ChangeEventArgs e)
+    {
+        bool isChecked = (bool)e.Value;
+        checkboxStates[users] = isChecked;
+        IsCheckedUnAssign(users, isChecked);
+    }
+    private void IsCheckedUnAssign(USER_PROFILE users, bool isChecked)
+    {
+        if (isChecked)
+        {
+            if (!TempRegUserList.Contains(users))
+            {
+                TempRegUserList.Add(users);
+            }
+        }
+        else
+        {
+            TempRegUserList.Remove(users);
+        }
+    }
+
+    private void AddIntoAssignList(List<USER_PROFILE> objTempList)
+    {
+        foreach (var item in objTempList)
+        {
+            PermRegUserList.Add(item);
+            IsChecked = false;
+            ListOfUAUsers.Remove(item);
+            ListforSave.Add(item);
+            
+        }
+        objTempList.Clear();
+    }
+
+
+
+
+
+    private void OnAssignedCheckboxChange(USER_PROFILE users, ChangeEventArgs e)
+    {
+        //isAssign = (bool)e.Value;
+
+        bool isChecked = (bool)e.Value;
+        checkboxStates[users] = isChecked;
+        IsCheckedAssign(users, isChecked);
+    }
+    private void IsCheckedAssign(USER_PROFILE users, bool isChecked)
+    {
+
+        if (isChecked)
+        {
+            if (!TempRegUserList.Contains(users))
+            {
+                TempRegUserList.Add(users);
+            }
+        }
+        else
+        {
+            TempRegUserList.Remove(users);
+        }
+    }
+    private void AddIntoUnAssignList(List<USER_PROFILE> objTempList)
+    {
+        foreach (var item in objTempList)
+        {
+            PermRegUserList.Remove(item);
+            ListOfUAUsers.Add(item);
+            checkboxStates[users] = false;
+            ListforSave.Add(item);
+        }
+        objTempList.Clear();
+
+    }
+
+
+    private void AddIntoAssignListAtATime(List<USER_PROFILE> objRegUserList)
+    {
+        foreach (var obj in ListOfUAUsers)
+        {
+            PermRegUserList.Add(obj);
+        }
+        ListOfUAUsers.Clear();
+    }
+    private void AddIntoUnAssignListAtATime(List<USER_PROFILE> objRegUserList)
+    {
+        foreach (var obj in PermRegUserList)
+        {
+            ListOfUAUsers.Add(obj);
+        }
+        objRegUserList.Clear();
+    }
+
+
+
+
+}
